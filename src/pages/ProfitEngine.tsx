@@ -36,30 +36,30 @@ interface Rule {
 }
 
 const initialRules: Rule[] = [
-  { id: 1, priority: 1, ruleType: "collection", ruleValue: "Footwear", margin: 55, action: "free_shipping", active: true },
+  { id: 1, priority: 1, ruleType: "collection", ruleValue: "Fodtøj", margin: 55, action: "free_shipping", active: true },
   { id: 2, priority: 2, ruleType: "brand", ruleValue: "Nike", margin: 60, action: "free_shipping", active: true },
   { id: 3, priority: 3, ruleType: "tag", ruleValue: "outlet", margin: 70, action: "discounted_shipping", active: true },
-  { id: 4, priority: 4, ruleType: "collection", ruleValue: "Sale Items", margin: 25, action: "discounted_shipping", active: false },
+  { id: 4, priority: 4, ruleType: "collection", ruleValue: "Udsalgsvarer", margin: 25, action: "discounted_shipping", active: false },
 ];
 
 const ruleTypes = [
-  { value: "collection", label: "Collection" },
-  { value: "brand", label: "Brand / Vendor" },
-  { value: "tag", label: "Product Tag" },
-  { value: "global", label: "Storewide (Global)" },
+  { value: "collection", label: "Kategori / Kollektion" },
+  { value: "brand", label: "Brand / Leverandør" },
+  { value: "tag", label: "Produkt-tag" },
+  { value: "global", label: "Hele butikken (Global)" },
 ];
 
 const ruleValueOptions: Record<string, string[]> = {
-  collection: ["Summer Sale", "Footwear", "Premium Apparel", "Accessories", "Sale Items", "New Arrivals"],
+  collection: ["Sommersalg", "Fodtøj", "Premium Tøj", "Tilbehør", "Udsalgsvarer", "Nyheder"],
   brand: ["Nike", "Adidas", "Lego", "Apple", "Sony", "Patagonia"],
-  tag: ["new-arrival", "outlet", "fragile", "best-seller", "limited-edition", "clearance"],
-  global: ["All Products"],
+  tag: ["nyhed", "outlet", "skrøbelig", "bestseller", "limited-edition", "udsalg"],
+  global: ["Alle Produkter"],
 };
 
 const actions = [
-  { value: "free_shipping", label: "Offer Free Shipping" },
-  { value: "discounted_shipping", label: "Offer Discounted Shipping" },
-  { value: "expedited_free", label: "Offer Free Expedited" },
+  { value: "free_shipping", label: "Tilbyd Fri Fragt" },
+  { value: "discounted_shipping", label: "Tilbyd Nedsat Fragt" },
+  { value: "expedited_free", label: "Tilbyd Gratis Express" },
 ];
 
 export default function ProfitEngine() {
@@ -71,13 +71,13 @@ export default function ProfitEngine() {
   
   // Safety guardrails
   const [minProfitEnabled, setMinProfitEnabled] = useState(true);
-  const [minProfitAmount, setMinProfitAmount] = useState("10");
+  const [minProfitAmount, setMinProfitAmount] = useState("75");
 
   const handleCreateRule = () => {
     if (selectedRuleType !== "global" && !selectedRuleValue) {
       toast({
-        title: "Missing fields",
-        description: "Please select a value for your rule.",
+        title: "Manglende felter",
+        description: "Vælg venligst en værdi til din regel.",
         variant: "destructive",
       });
       return;
@@ -85,8 +85,8 @@ export default function ProfitEngine() {
 
     if (!marginValue || !selectedAction) {
       toast({
-        title: "Missing fields",
-        description: "Please complete all fields to create a rule.",
+        title: "Manglende felter",
+        description: "Udfyld venligst alle felter for at oprette en regel.",
         variant: "destructive",
       });
       return;
@@ -95,8 +95,8 @@ export default function ProfitEngine() {
     const margin = parseFloat(marginValue);
     if (isNaN(margin) || margin < 0 || margin > 100) {
       toast({
-        title: "Invalid margin",
-        description: "Margin must be between 0 and 100.",
+        title: "Ugyldig dækningsgrad",
+        description: "Dækningsgrad skal være mellem 0 og 100.",
         variant: "destructive",
       });
       return;
@@ -106,7 +106,7 @@ export default function ProfitEngine() {
       id: Date.now(),
       priority: rules.length + 1,
       ruleType: selectedRuleType,
-      ruleValue: selectedRuleType === "global" ? "All Products" : selectedRuleValue,
+      ruleValue: selectedRuleType === "global" ? "Alle Produkter" : selectedRuleValue,
       margin,
       action: selectedAction,
       active: true,
@@ -120,8 +120,8 @@ export default function ProfitEngine() {
     
     const typeLabel = ruleTypes.find(t => t.value === selectedRuleType)?.label || selectedRuleType;
     toast({
-      title: "Rule created",
-      description: `New ${typeLabel} rule saved successfully.`,
+      title: "Regel oprettet",
+      description: `Ny ${typeLabel}-regel gemt succesfuldt.`,
     });
   };
 
@@ -133,8 +133,8 @@ export default function ProfitEngine() {
   const handleDeleteRule = (id: number) => {
     setRules(rules.filter(rule => rule.id !== id));
     toast({
-      title: "Rule deleted",
-      description: "The rule has been removed.",
+      title: "Regel slettet",
+      description: "Reglen er blevet fjernet.",
     });
   };
 
@@ -154,14 +154,14 @@ export default function ProfitEngine() {
 
   return (
     <DashboardLayout 
-      title="Profit Rules & Logic" 
-      subtitle="Define when ShipConvert should step in to rescue a cart."
+      title="Profit-Regler & Logik" 
+      subtitle="Definer hvornår ShipConvert skal træde til for at redde en kurv."
     >
       {/* Header Action */}
       <div className="flex justify-end mb-4">
         <Button variant="outline" className="gap-2">
           <RefreshCw className="h-4 w-4" />
-          Sync Categories from Store
+          Synkroniser Kategorier fra Butik
         </Button>
       </div>
 
@@ -175,8 +175,8 @@ export default function ProfitEngine() {
                   <Sparkles className="h-4 w-4 text-foreground" />
                 </div>
                 <div>
-                  <h2 className="text-base font-semibold text-foreground">Add New Margin Rule</h2>
-                  <p className="text-sm text-muted-foreground">Build smart shipping logic without needing perfect COGS data</p>
+                  <h2 className="text-base font-semibold text-foreground">Opret Ny Regel</h2>
+                  <p className="text-sm text-muted-foreground">Byg smart fragtlogik uden behov for perfekte COGS-data</p>
                 </div>
               </div>
             </div>
@@ -186,10 +186,10 @@ export default function ProfitEngine() {
               <div className="flex flex-wrap items-center gap-3">
                 {/* Smart Selector - Rule Type */}
                 <div className="min-w-[150px]">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">Rule Based On</Label>
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">Regel baseret på</Label>
                   <Select value={selectedRuleType} onValueChange={handleRuleTypeChange}>
                     <SelectTrigger className="h-10">
-                      <SelectValue placeholder="Select type" />
+                      <SelectValue placeholder="Vælg type" />
                     </SelectTrigger>
                     <SelectContent className="bg-card border-border">
                       {ruleTypes.map(type => (
@@ -202,10 +202,10 @@ export default function ProfitEngine() {
                 {/* Smart Selector - Rule Value */}
                 {selectedRuleType !== "global" && (
                   <div className="min-w-[160px]">
-                    <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">Select Item</Label>
+                    <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">Vælg element</Label>
                     <Select value={selectedRuleValue} onValueChange={setSelectedRuleValue}>
                       <SelectTrigger className="h-10">
-                        <SelectValue placeholder="Select value" />
+                        <SelectValue placeholder="Vælg værdi" />
                       </SelectTrigger>
                       <SelectContent className="bg-card border-border">
                         {ruleValueOptions[selectedRuleType]?.map(value => (
@@ -220,7 +220,7 @@ export default function ProfitEngine() {
 
                 {/* AND Margin */}
                 <div className="flex-1 min-w-[120px]">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">AND Margin ≥</Label>
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">OG Dækningsgrad ≥</Label>
                   <div className="relative">
                     <Input
                       type="number"
@@ -241,10 +241,10 @@ export default function ProfitEngine() {
 
                 {/* THEN Action */}
                 <div className="flex-1 min-w-[180px]">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">THEN</Label>
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">SÅ</Label>
                   <Select value={selectedAction} onValueChange={setSelectedAction}>
                     <SelectTrigger className="h-10">
-                      <SelectValue placeholder="Select action" />
+                      <SelectValue placeholder="Vælg handling" />
                     </SelectTrigger>
                     <SelectContent className="bg-card border-border">
                       {actions.map(action => (
@@ -255,19 +255,19 @@ export default function ProfitEngine() {
                 </div>
               </div>
               
-              <p className="text-xs text-muted-foreground mt-3 italic">Matches are pulled dynamically from your Shopify store data.</p>
+              <p className="text-xs text-muted-foreground mt-3 italic">Data hentes dynamisk fra din Shopify-butik.</p>
 
               {/* Preview */}
               {(selectedRuleType === "global" || selectedRuleValue) && marginValue && selectedAction && (
                 <div className="mt-4 p-3 rounded-lg bg-muted border border-border animate-fade-in">
-                  <p className="text-xs text-muted-foreground mb-1">Rule Preview:</p>
+                  <p className="text-xs text-muted-foreground mb-1">Regel-forhåndsvisning:</p>
                   <p className="text-sm text-foreground">
-                    When a cart contains{" "}
+                    Når en kurv indeholder{" "}
                     <Badge variant="secondary" className="mx-1 text-xs">
-                      {selectedRuleType === "global" ? "any product" : `${getRuleTypeLabel(selectedRuleType)}: ${selectedRuleValue}`}
+                      {selectedRuleType === "global" ? "ethvert produkt" : `${getRuleTypeLabel(selectedRuleType)}: ${selectedRuleValue}`}
                     </Badge> 
-                    with margin ≥ <span className="font-semibold text-success">{marginValue}%</span>, 
-                    then <span className="font-medium">{getActionLabel(selectedAction).toLowerCase()}</span>.
+                    med dækningsgrad ≥ <span className="font-semibold text-success">{marginValue}%</span>, 
+                    så <span className="font-medium">{getActionLabel(selectedAction).toLowerCase()}</span>.
                   </p>
                 </div>
               )}
@@ -276,7 +276,7 @@ export default function ProfitEngine() {
             <div className="px-5 py-4 bg-muted/30 border-t border-border rounded-b-lg">
               <Button onClick={handleCreateRule} className="gap-2">
                 <Plus className="h-4 w-4" />
-                Create Rule
+                Opret Regel
               </Button>
             </div>
           </div>
@@ -291,8 +291,8 @@ export default function ProfitEngine() {
                   <Shield className="h-4 w-4 text-warning" />
                 </div>
                 <div>
-                  <h2 className="text-base font-semibold text-foreground">Safety Guardrails</h2>
-                  <p className="text-sm text-muted-foreground">Absolute limits to protect profits</p>
+                  <h2 className="text-base font-semibold text-foreground">Sikkerhedsnet</h2>
+                  <p className="text-sm text-muted-foreground">Absolutte grænser for at beskytte profit</p>
                 </div>
               </div>
             </div>
@@ -302,8 +302,8 @@ export default function ProfitEngine() {
               <div className="space-y-3">
                 <div className="flex items-center justify-between">
                   <div className="space-y-0.5">
-                    <Label className="text-sm font-medium">Minimum Net Profit</Label>
-                    <p className="text-xs text-muted-foreground">Never lose money on shipping</p>
+                    <Label className="text-sm font-medium">Min. Dækningsbidrag</Label>
+                    <p className="text-xs text-muted-foreground">Tab aldrig penge på fragt</p>
                   </div>
                   <Switch 
                     checked={minProfitEnabled} 
@@ -314,17 +314,17 @@ export default function ProfitEngine() {
                 {minProfitEnabled && (
                   <div className="animate-fade-in">
                     <Label className="text-xs text-muted-foreground">
-                      Never offer free shipping if profit drops below:
+                      Tilbyd aldrig fri fragt hvis profit falder under:
                     </Label>
                     <div className="relative mt-2">
-                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
                       <Input
                         type="number"
                         value={minProfitAmount}
                         onChange={(e) => setMinProfitAmount(e.target.value)}
-                        className="pl-7"
-                        placeholder="10"
+                        className="pr-10"
+                        placeholder="75"
                       />
+                      <span className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground text-sm">kr.</span>
                     </div>
                   </div>
                 )}
@@ -332,9 +332,9 @@ export default function ProfitEngine() {
 
               {/* Additional guardrails info */}
               <div className="p-3 rounded-lg bg-success-light border border-success/20">
-                <p className="text-xs text-success font-medium mb-1">Profit Protection Active</p>
+                <p className="text-xs text-success font-medium mb-1">Profit-beskyttelse Aktiv</p>
                 <p className="text-xs text-muted-foreground">
-                  ShipConvert will never recommend free shipping if it would result in a net loss.
+                  ShipConvert vil aldrig anbefale fri fragt, hvis det resulterer i et nettotab.
                 </p>
               </div>
             </div>
@@ -347,11 +347,11 @@ export default function ProfitEngine() {
         <div className="bg-card rounded-lg border border-border shadow-card">
           <div className="flex items-center justify-between p-4 border-b border-border">
             <div>
-              <h2 className="text-base font-semibold text-foreground">Active Rules</h2>
-              <p className="text-sm text-muted-foreground">Rules are evaluated in priority order</p>
+              <h2 className="text-base font-semibold text-foreground">Aktive Regler</h2>
+              <p className="text-sm text-muted-foreground">Regler evalueres i prioritetsrækkefølge</p>
             </div>
             <Badge variant="secondary" className="text-xs">
-              {rules.filter(r => r.active).length} of {rules.length} active
+              {rules.filter(r => r.active).length} af {rules.length} aktive
             </Badge>
           </div>
 
@@ -359,21 +359,21 @@ export default function ProfitEngine() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-muted/30">
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">Priority</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Rule Type</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Condition</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Est. Margin</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Action</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">Prioritet</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Regeltype</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Betingelse</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Est. Dækningsgrad</th>
+                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Handling</th>
                   <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
-                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider w-24">Actions</th>
+                  <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider w-24">Handlinger</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
                 {rules.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="px-4 py-12 text-center">
-                      <p className="text-muted-foreground">No rules configured yet.</p>
-                      <p className="text-sm text-muted-foreground mt-1">Create your first margin rule above.</p>
+                      <p className="text-muted-foreground">Ingen regler konfigureret endnu.</p>
+                      <p className="text-sm text-muted-foreground mt-1">Opret din første dækningsgrad-regel ovenfor.</p>
                     </td>
                   </tr>
                 ) : (

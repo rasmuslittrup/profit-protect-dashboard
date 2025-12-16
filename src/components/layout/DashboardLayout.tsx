@@ -17,12 +17,12 @@ interface DashboardLayoutProps {
 }
 
 const navigation = [
-  { name: "Dashboard", href: "/", icon: LayoutDashboard },
-  { name: "Profit Engine", href: "/profit-engine", icon: Zap },
-  { name: "Live Preview", href: "/live-preview", icon: Eye },
-  { name: "Analytics", href: "/analytics", icon: BarChart3 },
-  { name: "A/B Performance", href: "/performance", icon: FlaskConical },
-  { name: "Settings", href: "/settings", icon: Settings },
+  { name: "Oversigt", href: "/", icon: LayoutDashboard },
+  { name: "Profit-Motor", href: "/profit-engine", icon: Zap },
+  { name: "Live Test", href: "/live-preview", icon: Eye },
+  { name: "Statistik", href: "/analytics", icon: BarChart3 },
+  { name: "A/B Resultater", href: "/performance", icon: FlaskConical },
+  { name: "Indstillinger", href: "/settings", icon: Settings },
 ];
 
 export function DashboardLayout({ children, title, subtitle }: DashboardLayoutProps) {

@@ -14,24 +14,24 @@ import {
 
 const comparisonData = [
   {
-    metric: "Conversion Rate",
-    "Group A": 2.4,
-    "Group B": 3.1,
+    metric: "Konvertering",
+    "Gruppe A": 2.4,
+    "Gruppe B": 3.1,
   },
   {
-    metric: "Avg Order Value",
-    "Group A": 85,
-    "Group B": 94,
+    metric: "Gns. Ordreværdi",
+    "Gruppe A": 85,
+    "Gruppe B": 94,
   },
   {
-    metric: "Net Profit/Order",
-    "Group A": 28,
-    "Group B": 34,
+    metric: "Netto Profit/Ordre",
+    "Gruppe A": 28,
+    "Gruppe B": 34,
   },
   {
-    metric: "Cart Recovery",
-    "Group A": 12,
-    "Group B": 23,
+    metric: "Kurv-redning",
+    "Gruppe A": 12,
+    "Gruppe B": 23,
   },
 ];
 
@@ -48,9 +48,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
             />
             <span className="text-muted-foreground">{entry.name}:</span>
             <span className="font-medium text-foreground">
-              {entry.name.includes("Rate") || entry.name.includes("Recovery") 
+              {label === "Konvertering" || label === "Kurv-redning" 
                 ? `${entry.value}%` 
-                : `$${entry.value}`}
+                : `${entry.value} kr.`}
             </span>
           </div>
         ))}
@@ -63,8 +63,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 export default function Analytics() {
   return (
     <DashboardLayout 
-      title="Analytics" 
-      subtitle="A/B test results and hold-out group analysis"
+      title="Statistik" 
+      subtitle="A/B-testresultater og kontrolgruppe-analyse"
     >
       {/* Info Banner */}
       <div className="bg-info-light border border-info/20 rounded-lg p-4 mb-6">
@@ -73,10 +73,10 @@ export default function Analytics() {
             <Users className="h-4 w-4 text-info" />
           </div>
           <div>
-            <p className="font-medium text-foreground text-sm">Hold-out Group Testing Active</p>
+            <p className="font-medium text-foreground text-sm">Kontrolgruppe-test Aktiv</p>
             <p className="text-sm text-muted-foreground mt-1">
-              10% of your traffic sees standard shipping (Group A), while 90% sees ShipConvert's smart shipping (Group B). 
-              This proves the incremental value of margin-based decisions.
+              10% af din trafik ser standard fragt (Gruppe A), mens 90% ser ShipConverts smarte fragt (Gruppe B). 
+              Dette beviser den inkrementelle værdi af dækningsgrad-baserede beslutninger.
             </p>
           </div>
         </div>
@@ -85,30 +85,30 @@ export default function Analytics() {
       {/* KPI Cards */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         <KpiCard
-          title="Total Profit Saved"
-          value="$24,892"
-          change="+$4,230"
+          title="Samlet Reddet Indtjening"
+          value="186.690 kr."
+          change="+31.725 kr."
           changeType="positive"
           icon={DollarSign}
         />
         <KpiCard
-          title="Carts Rescued"
-          value="1,247"
+          title="Reddede Kurve"
+          value="1.247"
           change="+189"
           changeType="positive"
           icon={ShoppingCart}
         />
         <KpiCard
-          title="Conversion Uplift"
-          value="+23.4%"
-          change="+2.1pp"
+          title="Konverteringsløft"
+          value="+23,4%"
+          change="+2,1pp"
           changeType="positive"
           icon={TrendingUp}
         />
         <KpiCard
-          title="ROI vs Control"
-          value="4.2x"
-          change="+0.8x"
+          title="ROI vs Kontrol"
+          value="4,2x"
+          change="+0,8x"
           changeType="positive"
           icon={DollarSign}
         />
@@ -117,9 +117,9 @@ export default function Analytics() {
       {/* Comparison Chart */}
       <div className="bg-card rounded-lg border border-border shadow-card p-5">
         <div className="mb-5">
-          <h2 className="text-base font-semibold text-foreground">Performance Comparison</h2>
+          <h2 className="text-base font-semibold text-foreground">Performance Sammenligning</h2>
           <p className="text-sm text-muted-foreground mt-1">
-            Group A (Standard Shipping) vs Group B (ShipConvert Smart Shipping)
+            Gruppe A (Standard Fragt) vs Gruppe B (ShipConvert Smart Fragt)
           </p>
         </div>
         
@@ -147,16 +147,16 @@ export default function Analytics() {
                 )}
               />
               <Bar 
-                dataKey="Group A" 
+                dataKey="Gruppe A" 
                 fill="hsl(var(--chart-muted))" 
                 radius={[4, 4, 0, 0]}
-                name="Group A (Standard)"
+                name="Gruppe A (Standard)"
               />
               <Bar 
-                dataKey="Group B" 
+                dataKey="Gruppe B" 
                 fill="hsl(var(--chart-success))" 
                 radius={[4, 4, 0, 0]}
-                name="Group B (ShipConvert)"
+                name="Gruppe B (ShipConvert)"
               />
             </BarChart>
           </ResponsiveContainer>
@@ -164,10 +164,10 @@ export default function Analytics() {
 
         {/* Key Insight */}
         <div className="mt-5 p-4 rounded-lg bg-success-light border border-success/20">
-          <p className="text-sm font-medium text-success">Key Insight</p>
+          <p className="text-sm font-medium text-success">Vigtig Indsigt</p>
           <p className="text-sm text-foreground mt-1">
-            Group B shows <strong>29% higher conversion</strong> and <strong>21% higher net profit per order</strong> despite 
-            absorbing shipping costs on qualifying orders. The margin-based approach ensures only profitable free shipping is offered.
+            Gruppe B viser <strong>29% højere konvertering</strong> og <strong>21% højere netto profit pr. ordre</strong> på trods af 
+            at absorbere fragtomkostninger på kvalificerende ordrer. Den dækningsgrad-baserede tilgang sikrer, at kun profitabel fri fragt tilbydes.
           </p>
         </div>
       </div>
@@ -175,45 +175,45 @@ export default function Analytics() {
       {/* Detailed Stats */}
       <div className="grid gap-4 md:grid-cols-2 mt-6">
         <div className="bg-card rounded-lg border border-border shadow-card p-5">
-          <h3 className="text-base font-semibold text-foreground mb-4">Group A: Standard Shipping</h3>
+          <h3 className="text-base font-semibold text-foreground mb-4">Gruppe A: Standard Fragt</h3>
           <div className="space-y-3">
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Total Orders</span>
-              <span className="text-sm font-medium text-foreground">1,240</span>
+              <span className="text-sm text-muted-foreground">Antal Ordrer</span>
+              <span className="text-sm font-medium text-foreground">1.240</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Free Shipping Offered</span>
-              <span className="text-sm font-medium text-foreground">0 (None)</span>
+              <span className="text-sm text-muted-foreground">Fri Fragt Tilbudt</span>
+              <span className="text-sm font-medium text-foreground">0 (Ingen)</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Average Cart Abandonment</span>
+              <span className="text-sm text-muted-foreground">Gns. Kurv-afbrydelse</span>
               <span className="text-sm font-medium text-foreground">68%</span>
             </div>
             <div className="flex justify-between py-2">
-              <span className="text-sm text-muted-foreground">Net Profit</span>
-              <span className="text-sm font-medium text-foreground">$34,720</span>
+              <span className="text-sm text-muted-foreground">Netto Profit</span>
+              <span className="text-sm font-medium text-foreground">260.400 kr.</span>
             </div>
           </div>
         </div>
 
         <div className="bg-card rounded-lg border border-border shadow-card p-5">
-          <h3 className="text-base font-semibold text-foreground mb-4">Group B: ShipConvert Smart Shipping</h3>
+          <h3 className="text-base font-semibold text-foreground mb-4">Gruppe B: ShipConvert Smart Fragt</h3>
           <div className="space-y-3">
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Total Orders</span>
-              <span className="text-sm font-medium text-foreground">11,160</span>
+              <span className="text-sm text-muted-foreground">Antal Ordrer</span>
+              <span className="text-sm font-medium text-foreground">11.160</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Free Shipping Offered</span>
-              <span className="text-sm font-medium text-success">7,812 (70%)</span>
+              <span className="text-sm text-muted-foreground">Fri Fragt Tilbudt</span>
+              <span className="text-sm font-medium text-success">7.812 (70%)</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-sm text-muted-foreground">Average Cart Abandonment</span>
+              <span className="text-sm text-muted-foreground">Gns. Kurv-afbrydelse</span>
               <span className="text-sm font-medium text-success">52%</span>
             </div>
             <div className="flex justify-between py-2">
-              <span className="text-sm text-muted-foreground">Net Profit</span>
-              <span className="text-sm font-medium text-success">$379,440</span>
+              <span className="text-sm text-muted-foreground">Netto Profit</span>
+              <span className="text-sm font-medium text-success">2.845.800 kr.</span>
             </div>
           </div>
         </div>

@@ -39,8 +39,8 @@ export default function Settings() {
   const handleTestConnection = async () => {
     if (!shopUrl || !accessToken) {
       toast({
-        title: "Missing credentials",
-        description: "Please enter both Shop URL and Access Token.",
+        title: "Manglende oplysninger",
+        description: "Indtast venligst både butiks-URL og adgangstoken.",
         variant: "destructive",
       });
       return;
@@ -51,16 +51,16 @@ export default function Settings() {
     setIsTesting(false);
     
     toast({
-      title: "Connection successful",
-      description: "Your store credentials are valid.",
+      title: "Forbindelse lykkedes",
+      description: "Dine butiks-oplysninger er gyldige.",
     });
   };
 
   const handleSaveCredentials = async () => {
     if (!shopUrl || !accessToken) {
       toast({
-        title: "Missing credentials",
-        description: "Please enter both Shop URL and Access Token.",
+        title: "Manglende oplysninger",
+        description: "Indtast venligst både butiks-URL og adgangstoken.",
         variant: "destructive",
       });
       return;
@@ -72,31 +72,31 @@ export default function Settings() {
     setIsSaving(false);
     
     toast({
-      title: "Credentials saved",
-      description: "Your store is now connected to ShipConvert.",
+      title: "Oplysninger gemt",
+      description: "Din butik er nu forbundet til ShipConvert.",
     });
   };
 
   const handlePauseInterventions = () => {
     toast({
-      title: "Interventions paused",
-      description: "All ShipConvert interventions have been paused.",
+      title: "Interventioner sat på pause",
+      description: "Alle ShipConvert-interventioner er blevet sat på pause.",
       variant: "destructive",
     });
   };
 
   const handleUninstall = () => {
     toast({
-      title: "Uninstall initiated",
-      description: "Please confirm in your store admin to complete uninstallation.",
+      title: "Afinstallation startet",
+      description: "Bekræft venligst i din butiks-admin for at fuldføre afinstallationen.",
       variant: "destructive",
     });
   };
 
   return (
     <DashboardLayout 
-      title="Settings & Integrations" 
-      subtitle="Connect your store and configure ShipConvert"
+      title="Indstillinger & Integrationer" 
+      subtitle="Forbind din butik og konfigurer ShipConvert"
     >
       <div className="max-w-2xl space-y-6">
         {/* Platform Connection */}
@@ -107,8 +107,8 @@ export default function Settings() {
                 <Store className="w-5 h-5 text-success" />
               </div>
               <div>
-                <h2 className="text-base font-semibold text-foreground">Platform Connection</h2>
-                <p className="text-sm text-muted-foreground">Connect your Shopify store</p>
+                <h2 className="text-base font-semibold text-foreground">Platform-forbindelse</h2>
+                <p className="text-sm text-muted-foreground">Forbind din Shopify-butik</p>
               </div>
             </div>
             
@@ -121,12 +121,12 @@ export default function Settings() {
               {isConnected ? (
                 <>
                   <CheckCircle2 className="w-3.5 h-3.5" />
-                  Connected
+                  Forbundet
                 </>
               ) : (
                 <>
                   <Circle className="w-3.5 h-3.5" />
-                  Disconnected
+                  Ikke forbundet
                 </>
               )}
             </div>
@@ -134,21 +134,21 @@ export default function Settings() {
           
           <div className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="shopUrl" className="text-sm font-medium">Shop URL</Label>
+              <Label htmlFor="shopUrl" className="text-sm font-medium">Butiks-URL</Label>
               <Input 
                 id="shopUrl" 
-                placeholder="my-store.myshopify.com"
+                placeholder="min-butik.myshopify.com"
                 value={shopUrl}
                 onChange={(e) => setShopUrl(e.target.value)}
                 className="font-mono text-sm"
               />
               <p className="text-xs text-muted-foreground">
-                Your Shopify store domain without https://
+                Dit Shopify-domæne uden https://
               </p>
             </div>
             
             <div className="space-y-2">
-              <Label htmlFor="accessToken" className="text-sm font-medium">Access Token</Label>
+              <Label htmlFor="accessToken" className="text-sm font-medium">Adgangstoken</Label>
               <div className="relative">
                 <Input 
                   id="accessToken" 
@@ -167,7 +167,7 @@ export default function Settings() {
                 </button>
               </div>
               <p className="text-xs text-muted-foreground">
-                Generate this from your Shopify Admin → Settings → Apps → Develop apps
+                Generer denne fra din Shopify Admin → Indstillinger → Apps → Udvikl apps
               </p>
             </div>
             
@@ -183,7 +183,7 @@ export default function Settings() {
                 ) : (
                   <RefreshCw className="w-4 h-4" />
                 )}
-                Test Connection
+                Test Forbindelse
               </Button>
               <Button 
                 onClick={handleSaveCredentials}
@@ -195,7 +195,7 @@ export default function Settings() {
                 ) : (
                   <Shield className="w-4 h-4" />
                 )}
-                Save Credentials
+                Gem Oplysninger
               </Button>
             </div>
           </div>
@@ -208,8 +208,8 @@ export default function Settings() {
               <Database className="w-5 h-5 text-foreground" />
             </div>
             <div>
-              <h2 className="text-base font-semibold text-foreground">Data Sync Preferences</h2>
-              <p className="text-sm text-muted-foreground">Control how ShipConvert syncs with your store</p>
+              <h2 className="text-base font-semibold text-foreground">Data-synkronisering</h2>
+              <p className="text-sm text-muted-foreground">Styr hvordan ShipConvert synkroniserer med din butik</p>
             </div>
           </div>
           
@@ -218,9 +218,9 @@ export default function Settings() {
               <div className="flex items-start gap-3">
                 <Database className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <Label className="text-sm font-medium">Sync Product Costs (COGS) Daily</Label>
+                  <Label className="text-sm font-medium">Synkroniser Produktomkostninger (COGS) Dagligt</Label>
                   <p className="text-xs text-muted-foreground">
-                    Automatically import cost data to improve margin calculations
+                    Importer automatisk omkostningsdata for at forbedre dækningsgrad-beregninger
                   </p>
                 </div>
               </div>
@@ -236,9 +236,9 @@ export default function Settings() {
               <div className="flex items-start gap-3">
                 <Activity className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <Label className="text-sm font-medium">Real-time Order Monitoring</Label>
+                  <Label className="text-sm font-medium">Real-time Ordre-overvågning</Label>
                   <p className="text-xs text-muted-foreground">
-                    Track orders as they happen for instant interventions
+                    Følg ordrer i realtid for øjeblikkelige interventioner
                   </p>
                 </div>
               </div>
@@ -254,9 +254,9 @@ export default function Settings() {
               <div className="flex items-start gap-3">
                 <Archive className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
-                  <Label className="text-sm font-medium">Auto-Archive Fulfilled Orders</Label>
+                  <Label className="text-sm font-medium">Auto-arkiver Afsluttede Ordrer</Label>
                   <p className="text-xs text-muted-foreground">
-                    Keep your dashboard clean by archiving completed orders
+                    Hold dit dashboard rent ved at arkivere færdige ordrer
                   </p>
                 </div>
               </div>
@@ -275,17 +275,17 @@ export default function Settings() {
               <AlertTriangle className="w-5 h-5 text-destructive" />
             </div>
             <div>
-              <h2 className="text-base font-semibold text-destructive">Danger Zone</h2>
-              <p className="text-sm text-muted-foreground">Irreversible actions. Proceed with caution.</p>
+              <h2 className="text-base font-semibold text-destructive">Farezone</h2>
+              <p className="text-sm text-muted-foreground">Uigenkaldelige handlinger. Fortsæt med forsigtighed.</p>
             </div>
           </div>
           
           <div className="space-y-3">
             <div className="flex items-center justify-between p-3 rounded-lg border border-border bg-muted/30">
               <div>
-                <p className="text-sm font-medium text-foreground">Pause All Interventions</p>
+                <p className="text-sm font-medium text-foreground">Pause Alle Interventioner</p>
                 <p className="text-xs text-muted-foreground">
-                  Temporarily stop ShipConvert from triggering on your store
+                  Stop midlertidigt ShipConvert fra at aktivere i din butik
                 </p>
               </div>
               <Button 
@@ -301,9 +301,9 @@ export default function Settings() {
             
             <div className="flex items-center justify-between p-3 rounded-lg border border-destructive/30 bg-destructive/5">
               <div>
-                <p className="text-sm font-medium text-foreground">Uninstall ShipConvert</p>
+                <p className="text-sm font-medium text-foreground">Afinstaller ShipConvert</p>
                 <p className="text-xs text-muted-foreground">
-                  Permanently remove ShipConvert from your store
+                  Fjern permanent ShipConvert fra din butik
                 </p>
               </div>
               <Button 
@@ -313,7 +313,7 @@ export default function Settings() {
                 className="gap-2 text-destructive border-destructive/30 hover:bg-destructive/10"
               >
                 <Trash2 className="w-4 h-4" />
-                Uninstall
+                Afinstaller
               </Button>
             </div>
           </div>
