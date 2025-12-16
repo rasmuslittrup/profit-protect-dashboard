@@ -47,7 +47,6 @@ export default function Settings() {
     }
 
     setIsTesting(true);
-    // Simulate API test
     await new Promise(resolve => setTimeout(resolve, 1500));
     setIsTesting(false);
     
@@ -99,41 +98,41 @@ export default function Settings() {
       title="Settings & Integrations" 
       subtitle="Connect your store and configure ShipConvert"
     >
-      <div className="max-w-3xl space-y-8">
+      <div className="max-w-2xl space-y-6">
         {/* Platform Connection */}
-        <div className="bg-card rounded-xl border border-border shadow-card p-6">
-          <div className="flex items-start justify-between mb-6">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 rounded-lg bg-[#96bf48]/10 flex items-center justify-center">
-                <Store className="w-6 h-6 text-[#96bf48]" />
+        <div className="bg-card rounded-lg border border-border shadow-card p-5">
+          <div className="flex items-start justify-between mb-5">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
+                <Store className="w-5 h-5 text-success" />
               </div>
               <div>
-                <h2 className="text-lg font-semibold text-foreground">Platform Connection</h2>
+                <h2 className="text-base font-semibold text-foreground">Platform Connection</h2>
                 <p className="text-sm text-muted-foreground">Connect your Shopify store</p>
               </div>
             </div>
             
             {/* Connection Status */}
-            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-sm font-medium ${
+            <div className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium ${
               isConnected 
-                ? 'bg-emerald/10 text-emerald' 
+                ? 'bg-success/10 text-success' 
                 : 'bg-muted text-muted-foreground'
             }`}>
               {isConnected ? (
                 <>
-                  <CheckCircle2 className="w-4 h-4" />
+                  <CheckCircle2 className="w-3.5 h-3.5" />
                   Connected
                 </>
               ) : (
                 <>
-                  <Circle className="w-4 h-4" />
+                  <Circle className="w-3.5 h-3.5" />
                   Disconnected
                 </>
               )}
             </div>
           </div>
           
-          <div className="space-y-5">
+          <div className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="shopUrl" className="text-sm font-medium">Shop URL</Label>
               <Input 
@@ -203,24 +202,24 @@ export default function Settings() {
         </div>
 
         {/* Data Sync Preferences */}
-        <div className="bg-card rounded-xl border border-border shadow-card p-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Database className="w-5 h-5 text-primary" />
+        <div className="bg-card rounded-lg border border-border shadow-card p-5">
+          <div className="flex items-center gap-3 mb-5">
+            <div className="w-10 h-10 rounded-lg bg-muted flex items-center justify-center">
+              <Database className="w-5 h-5 text-foreground" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-foreground">Data Sync Preferences</h2>
+              <h2 className="text-base font-semibold text-foreground">Data Sync Preferences</h2>
               <p className="text-sm text-muted-foreground">Control how ShipConvert syncs with your store</p>
             </div>
           </div>
           
           <div className="space-y-1">
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between py-3">
               <div className="flex items-start gap-3">
-                <Database className="w-5 h-5 text-muted-foreground mt-0.5" />
+                <Database className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
                   <Label className="text-sm font-medium">Sync Product Costs (COGS) Daily</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     Automatically import cost data to improve margin calculations
                   </p>
                 </div>
@@ -233,12 +232,12 @@ export default function Settings() {
             
             <Separator />
             
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between py-3">
               <div className="flex items-start gap-3">
-                <Activity className="w-5 h-5 text-muted-foreground mt-0.5" />
+                <Activity className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
                   <Label className="text-sm font-medium">Real-time Order Monitoring</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     Track orders as they happen for instant interventions
                   </p>
                 </div>
@@ -251,12 +250,12 @@ export default function Settings() {
             
             <Separator />
             
-            <div className="flex items-center justify-between py-4">
+            <div className="flex items-center justify-between py-3">
               <div className="flex items-start gap-3">
-                <Archive className="w-5 h-5 text-muted-foreground mt-0.5" />
+                <Archive className="w-4 h-4 text-muted-foreground mt-0.5" />
                 <div>
                   <Label className="text-sm font-medium">Auto-Archive Fulfilled Orders</Label>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-xs text-muted-foreground">
                     Keep your dashboard clean by archiving completed orders
                   </p>
                 </div>
@@ -270,19 +269,19 @@ export default function Settings() {
         </div>
 
         {/* Danger Zone */}
-        <div className="bg-card rounded-xl border-2 border-destructive/30 shadow-card p-6">
+        <div className="bg-card rounded-lg border-2 border-destructive/30 shadow-card p-5">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-10 h-10 rounded-lg bg-destructive/10 flex items-center justify-center">
               <AlertTriangle className="w-5 h-5 text-destructive" />
             </div>
             <div>
-              <h2 className="text-lg font-semibold text-destructive">Danger Zone</h2>
+              <h2 className="text-base font-semibold text-destructive">Danger Zone</h2>
               <p className="text-sm text-muted-foreground">Irreversible actions. Proceed with caution.</p>
             </div>
           </div>
           
-          <div className="space-y-4">
-            <div className="flex items-center justify-between p-4 rounded-lg border border-border bg-muted/30">
+          <div className="space-y-3">
+            <div className="flex items-center justify-between p-3 rounded-lg border border-border bg-muted/30">
               <div>
                 <p className="text-sm font-medium text-foreground">Pause All Interventions</p>
                 <p className="text-xs text-muted-foreground">
@@ -293,14 +292,14 @@ export default function Settings() {
                 variant="outline" 
                 size="sm"
                 onClick={handlePauseInterventions}
-                className="gap-2 text-amber-600 border-amber-300 hover:bg-amber-50 hover:text-amber-700"
+                className="gap-2 text-warning border-warning/30 hover:bg-warning/10"
               >
                 <Pause className="w-4 h-4" />
                 Pause
               </Button>
             </div>
             
-            <div className="flex items-center justify-between p-4 rounded-lg border border-destructive/30 bg-destructive/5">
+            <div className="flex items-center justify-between p-3 rounded-lg border border-destructive/30 bg-destructive/5">
               <div>
                 <p className="text-sm font-medium text-foreground">Uninstall ShipConvert</p>
                 <p className="text-xs text-muted-foreground">

@@ -67,13 +67,13 @@ export default function Analytics() {
       subtitle="A/B test results and hold-out group analysis"
     >
       {/* Info Banner */}
-      <div className="bg-primary/5 border border-primary/20 rounded-lg p-4 mb-8">
+      <div className="bg-info-light border border-info/20 rounded-lg p-4 mb-6">
         <div className="flex gap-3">
-          <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
-            <Users className="h-5 w-5 text-primary" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-info/10 flex-shrink-0">
+            <Users className="h-4 w-4 text-info" />
           </div>
           <div>
-            <p className="font-medium text-foreground">Hold-out Group Testing Active</p>
+            <p className="font-medium text-foreground text-sm">Hold-out Group Testing Active</p>
             <p className="text-sm text-muted-foreground mt-1">
               10% of your traffic sees standard shipping (Group A), while 90% sees ShipConvert's smart shipping (Group B). 
               This proves the incremental value of margin-based decisions.
@@ -83,7 +83,7 @@ export default function Analytics() {
       </div>
 
       {/* KPI Cards */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         <KpiCard
           title="Total Profit Saved"
           value="$24,892"
@@ -115,15 +115,15 @@ export default function Analytics() {
       </div>
 
       {/* Comparison Chart */}
-      <div className="bg-card rounded-lg border border-border shadow-card p-6">
-        <div className="mb-6">
-          <h2 className="text-lg font-semibold text-foreground">Performance Comparison</h2>
+      <div className="bg-card rounded-lg border border-border shadow-card p-5">
+        <div className="mb-5">
+          <h2 className="text-base font-semibold text-foreground">Performance Comparison</h2>
           <p className="text-sm text-muted-foreground mt-1">
             Group A (Standard Shipping) vs Group B (ShipConvert Smart Shipping)
           </p>
         </div>
         
-        <div className="h-80">
+        <div className="h-72">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
               data={comparisonData}
@@ -163,7 +163,7 @@ export default function Analytics() {
         </div>
 
         {/* Key Insight */}
-        <div className="mt-6 p-4 rounded-lg bg-success-light border border-success/20">
+        <div className="mt-5 p-4 rounded-lg bg-success-light border border-success/20">
           <p className="text-sm font-medium text-success">Key Insight</p>
           <p className="text-sm text-foreground mt-1">
             Group B shows <strong>29% higher conversion</strong> and <strong>21% higher net profit per order</strong> despite 
@@ -173,47 +173,47 @@ export default function Analytics() {
       </div>
 
       {/* Detailed Stats */}
-      <div className="grid gap-6 md:grid-cols-2 mt-8">
-        <div className="bg-card rounded-lg border border-border shadow-card p-6">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Group A: Standard Shipping</h3>
-          <div className="space-y-4">
+      <div className="grid gap-4 md:grid-cols-2 mt-6">
+        <div className="bg-card rounded-lg border border-border shadow-card p-5">
+          <h3 className="text-base font-semibold text-foreground mb-4">Group A: Standard Shipping</h3>
+          <div className="space-y-3">
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-muted-foreground">Total Orders</span>
-              <span className="font-medium text-foreground">1,240</span>
+              <span className="text-sm text-muted-foreground">Total Orders</span>
+              <span className="text-sm font-medium text-foreground">1,240</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-muted-foreground">Free Shipping Offered</span>
-              <span className="font-medium text-foreground">0 (None)</span>
+              <span className="text-sm text-muted-foreground">Free Shipping Offered</span>
+              <span className="text-sm font-medium text-foreground">0 (None)</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-muted-foreground">Average Cart Abandonment</span>
-              <span className="font-medium text-foreground">68%</span>
+              <span className="text-sm text-muted-foreground">Average Cart Abandonment</span>
+              <span className="text-sm font-medium text-foreground">68%</span>
             </div>
             <div className="flex justify-between py-2">
-              <span className="text-muted-foreground">Net Profit</span>
-              <span className="font-medium text-foreground">$34,720</span>
+              <span className="text-sm text-muted-foreground">Net Profit</span>
+              <span className="text-sm font-medium text-foreground">$34,720</span>
             </div>
           </div>
         </div>
 
-        <div className="bg-card rounded-lg border border-border shadow-card p-6">
-          <h3 className="text-lg font-semibold text-foreground mb-4">Group B: ShipConvert Smart Shipping</h3>
-          <div className="space-y-4">
+        <div className="bg-card rounded-lg border border-border shadow-card p-5">
+          <h3 className="text-base font-semibold text-foreground mb-4">Group B: ShipConvert Smart Shipping</h3>
+          <div className="space-y-3">
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-muted-foreground">Total Orders</span>
-              <span className="font-medium text-foreground">11,160</span>
+              <span className="text-sm text-muted-foreground">Total Orders</span>
+              <span className="text-sm font-medium text-foreground">11,160</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-muted-foreground">Free Shipping Offered</span>
-              <span className="font-medium text-success">7,812 (70%)</span>
+              <span className="text-sm text-muted-foreground">Free Shipping Offered</span>
+              <span className="text-sm font-medium text-success">7,812 (70%)</span>
             </div>
             <div className="flex justify-between py-2 border-b border-border">
-              <span className="text-muted-foreground">Average Cart Abandonment</span>
-              <span className="font-medium text-success">52%</span>
+              <span className="text-sm text-muted-foreground">Average Cart Abandonment</span>
+              <span className="text-sm font-medium text-success">52%</span>
             </div>
             <div className="flex justify-between py-2">
-              <span className="text-muted-foreground">Net Profit</span>
-              <span className="font-medium text-success">$379,440</span>
+              <span className="text-sm text-muted-foreground">Net Profit</span>
+              <span className="text-sm font-medium text-success">$379,440</span>
             </div>
           </div>
         </div>
