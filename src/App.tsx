@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import ProfitEngine from "./pages/ProfitEngine";
 import LivePreview from "./pages/LivePreview";
 import Analytics from "./pages/Analytics";
+import PerformanceDeepDive from "./pages/PerformanceDeepDive";
 import Settings from "./pages/Settings";
 import NotFound from "./pages/NotFound";
 
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/profit-engine" element={<ProfitEngine />} />
           <Route path="/live-preview" element={<LivePreview />} />
           <Route path="/analytics" element={<Analytics />} />
+          <Route path="/performance" element={<PerformanceDeepDive />} />
           <Route path="/settings" element={<Settings />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
