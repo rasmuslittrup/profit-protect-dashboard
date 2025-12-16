@@ -1,8 +1,6 @@
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { KpiCard } from "@/components/ui/kpi-card";
 import { StatusBadge } from "@/components/ui/status-badge";
-import { StrategySelector } from "@/components/StrategySelector";
-import { LiveWinTicker } from "@/components/LiveWinTicker";
 import { 
   DollarSign, 
   ShoppingCart, 
@@ -28,12 +26,6 @@ export default function Dashboard() {
       title="Oversigt" 
       subtitle="Overvåg din fragoptimerings-performance"
     >
-      {/* Live Win Ticker */}
-      <LiveWinTicker />
-
-      {/* Strategy Selector */}
-      <StrategySelector />
-
       {/* KPI Grid */}
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         <KpiCard
