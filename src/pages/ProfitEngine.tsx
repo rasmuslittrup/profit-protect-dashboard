@@ -28,29 +28,33 @@ import { toast } from "@/hooks/use-toast";
 interface Rule {
   id: number;
   priority: number;
-  category: string;
+  ruleType: string;
+  ruleValue: string;
   margin: number;
   action: string;
   active: boolean;
 }
 
 const initialRules: Rule[] = [
-  { id: 1, priority: 1, category: "Sneakers", margin: 55, action: "free_shipping", active: true },
-  { id: 2, priority: 2, category: "Premium Apparel", margin: 60, action: "free_shipping", active: true },
-  { id: 3, priority: 3, category: "Accessories", margin: 70, action: "discounted_shipping", active: true },
-  { id: 4, priority: 4, category: "Sale Items", margin: 25, action: "discounted_shipping", active: false },
+  { id: 1, priority: 1, ruleType: "collection", ruleValue: "Footwear", margin: 55, action: "free_shipping", active: true },
+  { id: 2, priority: 2, ruleType: "brand", ruleValue: "Nike", margin: 60, action: "free_shipping", active: true },
+  { id: 3, priority: 3, ruleType: "tag", ruleValue: "outlet", margin: 70, action: "discounted_shipping", active: true },
+  { id: 4, priority: 4, ruleType: "collection", ruleValue: "Sale Items", margin: 25, action: "discounted_shipping", active: false },
 ];
 
-const categories = [
-  "Sneakers",
-  "Premium Apparel", 
-  "Accessories",
-  "Sale Items",
-  "Electronics",
-  "Home Goods",
-  "Beauty",
-  "Sports Equipment"
+const ruleTypes = [
+  { value: "collection", label: "Collection" },
+  { value: "brand", label: "Brand / Vendor" },
+  { value: "tag", label: "Product Tag" },
+  { value: "global", label: "Storewide (Global)" },
 ];
+
+const ruleValueOptions: Record<string, string[]> = {
+  collection: ["Summer Sale", "Footwear", "Premium Apparel", "Accessories", "Sale Items", "New Arrivals"],
+  brand: ["Nike", "Adidas", "Lego", "Apple", "Sony", "Patagonia"],
+  tag: ["new-arrival", "outlet", "fragile", "best-seller", "limited-edition", "clearance"],
+  global: ["All Products"],
+};
 
 const actions = [
   { value: "free_shipping", label: "Offer Free Shipping" },
@@ -60,7 +64,8 @@ const actions = [
 
 export default function ProfitEngine() {
   const [rules, setRules] = useState<Rule[]>(initialRules);
-  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedRuleType, setSelectedRuleType] = useState("collection");
+  const [selectedRuleValue, setSelectedRuleValue] = useState("");
   const [marginValue, setMarginValue] = useState("");
   const [selectedAction, setSelectedAction] = useState("");
   
@@ -69,7 +74,16 @@ export default function ProfitEngine() {
   const [minProfitAmount, setMinProfitAmount] = useState("10");
 
   const handleCreateRule = () => {
-    if (!selectedCategory || !marginValue || !selectedAction) {
+    if (selectedRuleType !== "global" && !selectedRuleValue) {
+      toast({
+        title: "Missing fields",
+        description: "Please select a value for your rule.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (!marginValue || !selectedAction) {
       toast({
         title: "Missing fields",
         description: "Please complete all fields to create a rule.",
@@ -91,21 +105,29 @@ export default function ProfitEngine() {
     const newRule: Rule = {
       id: Date.now(),
       priority: rules.length + 1,
-      category: selectedCategory,
+      ruleType: selectedRuleType,
+      ruleValue: selectedRuleType === "global" ? "All Products" : selectedRuleValue,
       margin,
       action: selectedAction,
       active: true,
     };
 
     setRules([...rules, newRule]);
-    setSelectedCategory("");
+    setSelectedRuleType("collection");
+    setSelectedRuleValue("");
     setMarginValue("");
     setSelectedAction("");
     
+    const typeLabel = ruleTypes.find(t => t.value === selectedRuleType)?.label || selectedRuleType;
     toast({
       title: "Rule created",
-      description: `New margin rule for ${selectedCategory} saved successfully.`,
+      description: `New ${typeLabel} rule saved successfully.`,
     });
+  };
+
+  const handleRuleTypeChange = (value: string) => {
+    setSelectedRuleType(value);
+    setSelectedRuleValue("");
   };
 
   const handleDeleteRule = (id: number) => {
@@ -124,6 +146,10 @@ export default function ProfitEngine() {
 
   const getActionLabel = (value: string) => {
     return actions.find(a => a.value === value)?.label || value;
+  };
+
+  const getRuleTypeLabel = (value: string) => {
+    return ruleTypes.find(t => t.value === value)?.label || value;
   };
 
   return (
@@ -158,25 +184,42 @@ export default function ProfitEngine() {
             <div className="p-6">
               {/* Rule Builder Form */}
               <div className="flex flex-wrap items-center gap-4">
-                {/* IF Category */}
-                <div className="flex-1 min-w-[180px]">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">IF Category</Label>
-                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                {/* Smart Selector - Rule Type */}
+                <div className="min-w-[160px]">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">Rule Based On</Label>
+                  <Select value={selectedRuleType} onValueChange={handleRuleTypeChange}>
                     <SelectTrigger className="h-11">
-                      <SelectValue placeholder="Select category" />
+                      <SelectValue placeholder="Select type" />
                     </SelectTrigger>
                     <SelectContent className="bg-card border-border">
-                      {categories.map(cat => (
-                        <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                      {ruleTypes.map(type => (
+                        <SelectItem key={type.value} value={type.value}>{type.label}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
 
+                {/* Smart Selector - Rule Value */}
+                {selectedRuleType !== "global" && (
+                  <div className="min-w-[180px]">
+                    <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">Select Item</Label>
+                    <Select value={selectedRuleValue} onValueChange={setSelectedRuleValue}>
+                      <SelectTrigger className="h-11">
+                        <SelectValue placeholder="Select value" />
+                      </SelectTrigger>
+                      <SelectContent className="bg-card border-border">
+                        {ruleValueOptions[selectedRuleType]?.map(value => (
+                          <SelectItem key={value} value={value}>{value}</SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+                )}
+
                 <ArrowRight className="h-5 w-5 text-muted-foreground mt-6 hidden sm:block flex-shrink-0" />
 
                 {/* AND Margin */}
-                <div className="flex-1 min-w-[160px]">
+                <div className="flex-1 min-w-[140px]">
                   <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">AND Margin ≥</Label>
                   <div className="relative">
                     <Input
@@ -212,14 +255,17 @@ export default function ProfitEngine() {
                 </div>
               </div>
               
-              <p className="text-xs text-muted-foreground mt-3">Enter your estimated profit margin for this product category</p>
+              <p className="text-xs text-muted-foreground mt-3 italic">Matches are pulled dynamically from your Shopify store data.</p>
 
               {/* Preview */}
-              {selectedCategory && marginValue && selectedAction && (
+              {(selectedRuleType === "global" || selectedRuleValue) && marginValue && selectedAction && (
                 <div className="mt-6 p-4 rounded-lg bg-surface border border-border animate-fade-in">
                   <p className="text-sm text-muted-foreground mb-1">Rule Preview:</p>
                   <p className="text-foreground">
-                    When a cart contains <Badge variant="secondary" className="mx-1">{selectedCategory}</Badge> 
+                    When a cart contains{" "}
+                    <Badge variant="secondary" className="mx-1">
+                      {selectedRuleType === "global" ? "any product" : `${getRuleTypeLabel(selectedRuleType)}: ${selectedRuleValue}`}
+                    </Badge> 
                     with margin ≥ <span className="font-semibold text-success">{marginValue}%</span>, 
                     then <span className="font-medium">{getActionLabel(selectedAction).toLowerCase()}</span>.
                   </p>
@@ -313,7 +359,8 @@ export default function ProfitEngine() {
             <thead>
               <tr className="border-b border-border bg-surface">
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">Priority</th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Category</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Rule Type</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Condition</th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Est. Margin</th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Action</th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
@@ -338,8 +385,11 @@ export default function ProfitEngine() {
                       </div>
                     </td>
                     <td className="px-4 py-4">
+                      <span className="text-xs text-muted-foreground">{getRuleTypeLabel(rule.ruleType)}</span>
+                    </td>
+                    <td className="px-4 py-4">
                       <Badge variant="secondary" className="font-normal">
-                        {rule.category}
+                        {rule.ruleValue}
                       </Badge>
                     </td>
                     <td className="px-4 py-4">
