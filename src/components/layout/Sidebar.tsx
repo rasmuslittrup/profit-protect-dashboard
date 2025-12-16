@@ -5,7 +5,8 @@ import {
   BarChart3, 
   Settings,
   ChevronRight,
-  Eye
+  Eye,
+  FlaskConical
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -14,6 +15,7 @@ const navigation = [
   { name: "Profit Engine", href: "/profit-engine", icon: Zap },
   { name: "Live Preview", href: "/live-preview", icon: Eye },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
+  { name: "A/B Performance", href: "/performance", icon: FlaskConical },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
 
