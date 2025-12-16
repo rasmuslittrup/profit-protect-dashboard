@@ -3,7 +3,8 @@ import { DashboardLayout } from "@/components/layout/DashboardLayout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { StatusBadge } from "@/components/ui/status-badge";
+import { Switch } from "@/components/ui/switch";
+import { Badge } from "@/components/ui/badge";
 import { 
   Select,
   SelectContent,
@@ -11,55 +12,73 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch";
-import { Plus, Trash2, PlayCircle, CheckCircle, XCircle } from "lucide-react";
+import { 
+  RefreshCw, 
+  Plus, 
+  Pencil, 
+  Trash2, 
+  GripVertical,
+  Shield,
+  ArrowRight,
+  Percent,
+  Sparkles
+} from "lucide-react";
 import { toast } from "@/hooks/use-toast";
 
 interface Rule {
   id: number;
+  priority: number;
   category: string;
   margin: number;
+  action: string;
   active: boolean;
 }
 
-interface SimulationResult {
-  approved: boolean;
-  revenue: number;
-  profit: number;
-  shippingCost: number;
-  netUpside: number;
-}
-
 const initialRules: Rule[] = [
-  { id: 1, category: "Electronics", margin: 25, active: true },
-  { id: 2, category: "Shoes", margin: 50, active: true },
-  { id: 3, category: "Apparel", margin: 40, active: true },
-  { id: 4, category: "Home & Garden", margin: 35, active: false },
+  { id: 1, priority: 1, category: "Sneakers", margin: 55, action: "free_shipping", active: true },
+  { id: 2, priority: 2, category: "Premium Apparel", margin: 60, action: "free_shipping", active: true },
+  { id: 3, priority: 3, category: "Accessories", margin: 70, action: "discounted_shipping", active: true },
+  { id: 4, priority: 4, category: "Sale Items", margin: 25, action: "discounted_shipping", active: false },
 ];
 
-const categories = ["Electronics", "Shoes", "Apparel", "Home & Garden", "Sports", "Beauty", "Toys", "Books"];
+const categories = [
+  "Sneakers",
+  "Premium Apparel", 
+  "Accessories",
+  "Sale Items",
+  "Electronics",
+  "Home Goods",
+  "Beauty",
+  "Sports Equipment"
+];
+
+const actions = [
+  { value: "free_shipping", label: "Offer Free Shipping" },
+  { value: "discounted_shipping", label: "Offer Discounted Shipping" },
+  { value: "expedited_free", label: "Offer Free Expedited" },
+];
 
 export default function ProfitEngine() {
   const [rules, setRules] = useState<Rule[]>(initialRules);
-  const [newCategory, setNewCategory] = useState("");
-  const [newMargin, setNewMargin] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [marginValue, setMarginValue] = useState("");
+  const [selectedAction, setSelectedAction] = useState("");
   
-  // Simulator state
-  const [cartTotal, setCartTotal] = useState("100");
-  const [selectedCategory, setSelectedCategory] = useState("Shoes");
-  const [simulationResult, setSimulationResult] = useState<SimulationResult | null>(null);
+  // Safety guardrails
+  const [minProfitEnabled, setMinProfitEnabled] = useState(true);
+  const [minProfitAmount, setMinProfitAmount] = useState("10");
 
-  const handleAddRule = () => {
-    if (!newCategory || !newMargin) {
+  const handleCreateRule = () => {
+    if (!selectedCategory || !marginValue || !selectedAction) {
       toast({
         title: "Missing fields",
-        description: "Please fill in both category and margin.",
+        description: "Please complete all fields to create a rule.",
         variant: "destructive",
       });
       return;
     }
 
-    const margin = parseFloat(newMargin);
+    const margin = parseFloat(marginValue);
     if (isNaN(margin) || margin < 0 || margin > 100) {
       toast({
         title: "Invalid margin",
@@ -71,17 +90,21 @@ export default function ProfitEngine() {
 
     const newRule: Rule = {
       id: Date.now(),
-      category: newCategory,
+      priority: rules.length + 1,
+      category: selectedCategory,
       margin,
+      action: selectedAction,
       active: true,
     };
 
     setRules([...rules, newRule]);
-    setNewCategory("");
-    setNewMargin("");
+    setSelectedCategory("");
+    setMarginValue("");
+    setSelectedAction("");
+    
     toast({
       title: "Rule created",
-      description: `Margin rule for ${newCategory} saved successfully.`,
+      description: `New margin rule for ${selectedCategory} saved successfully.`,
     });
   };
 
@@ -89,7 +112,7 @@ export default function ProfitEngine() {
     setRules(rules.filter(rule => rule.id !== id));
     toast({
       title: "Rule deleted",
-      description: "The margin rule has been removed.",
+      description: "The rule has been removed.",
     });
   };
 
@@ -99,223 +122,261 @@ export default function ProfitEngine() {
     ));
   };
 
-  const runSimulation = () => {
-    const total = parseFloat(cartTotal);
-    if (isNaN(total) || total <= 0) {
-      toast({
-        title: "Invalid cart total",
-        description: "Please enter a valid cart amount.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    const rule = rules.find(r => r.category === selectedCategory && r.active);
-    const marginPercent = rule?.margin ?? 30; // Default 30% if no rule
-    const shippingCost = 5; // Fixed shipping cost for demo
-    
-    const profit = total * (marginPercent / 100);
-    const netUpside = profit - shippingCost;
-    const approved = netUpside > 0;
-
-    setSimulationResult({
-      approved,
-      revenue: total,
-      profit,
-      shippingCost,
-      netUpside,
-    });
+  const getActionLabel = (value: string) => {
+    return actions.find(a => a.value === value)?.label || value;
   };
 
   return (
     <DashboardLayout 
-      title="Profit Engine" 
-      subtitle="Configure margin rules and test shipping decisions"
+      title="Profit Rules & Logic" 
+      subtitle="Define when ShipConvert should step in to rescue a cart."
     >
-      <div className="grid gap-8 lg:grid-cols-2">
-        {/* Margin Configuration */}
-        <div className="space-y-6">
-          <div className="bg-card rounded-lg border border-border shadow-card p-6">
-            <h2 className="text-lg font-semibold text-foreground mb-6">Margin Configuration</h2>
+      {/* Header Action */}
+      <div className="flex justify-end mb-6">
+        <Button variant="outline" className="gap-2">
+          <RefreshCw className="h-4 w-4" />
+          Sync Categories from Store
+        </Button>
+      </div>
+
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Rule Builder - Takes 2 columns */}
+        <div className="lg:col-span-2">
+          <div className="bg-card rounded-lg border border-border shadow-card">
+            <div className="p-6 border-b border-border">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                  <Sparkles className="h-5 w-5 text-primary" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground">Add New Margin Rule</h2>
+                  <p className="text-sm text-muted-foreground">Build smart shipping logic without needing perfect COGS data</p>
+                </div>
+              </div>
+            </div>
             
-            {/* Add New Rule */}
-            <div className="space-y-4 pb-6 border-b border-border">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="category">Product Category</Label>
-                  <Select value={newCategory} onValueChange={setNewCategory}>
-                    <SelectTrigger id="category">
+            <div className="p-6">
+              {/* Rule Builder Form */}
+              <div className="flex flex-wrap items-end gap-4">
+                {/* IF Category */}
+                <div className="flex-1 min-w-[180px] space-y-2">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">IF Category</Label>
+                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
+                    <SelectTrigger className="h-11">
                       <SelectValue placeholder="Select category" />
                     </SelectTrigger>
-                    <SelectContent>
+                    <SelectContent className="bg-card border-border">
                       {categories.map(cat => (
                         <SelectItem key={cat} value={cat}>{cat}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="margin">Estimated Margin %</Label>
-                  <Input
-                    id="margin"
-                    type="number"
-                    placeholder="e.g. 50"
-                    value={newMargin}
-                    onChange={(e) => setNewMargin(e.target.value)}
-                    min="0"
-                    max="100"
-                  />
-                </div>
-              </div>
-              <Button onClick={handleAddRule} className="w-full sm:w-auto">
-                <Plus className="h-4 w-4 mr-2" />
-                Save Rule
-              </Button>
-            </div>
 
-            {/* Rules Table */}
-            <div className="mt-6">
-              <h3 className="text-sm font-medium text-muted-foreground mb-4">Active Rules</h3>
-              <div className="space-y-3">
-                {rules.length === 0 ? (
-                  <p className="text-sm text-muted-foreground text-center py-8">
-                    No rules configured yet. Add your first margin rule above.
-                  </p>
-                ) : (
-                  rules.map((rule) => (
-                    <div 
-                      key={rule.id}
-                      className="flex items-center justify-between p-4 rounded-lg bg-surface border border-border"
-                    >
-                      <div className="flex items-center gap-4">
-                        <Switch
-                          checked={rule.active}
-                          onCheckedChange={() => handleToggleRule(rule.id)}
-                        />
-                        <div>
-                          <p className="font-medium text-foreground">{rule.category}</p>
-                          <p className="text-sm text-muted-foreground">{rule.margin}% margin</p>
-                        </div>
-                      </div>
-                      <div className="flex items-center gap-3">
-                        <StatusBadge variant={rule.active ? "success" : "default"}>
-                          {rule.active ? "Active" : "Inactive"}
-                        </StatusBadge>
-                        <Button 
-                          variant="ghost" 
-                          size="icon"
-                          onClick={() => handleDeleteRule(rule.id)}
-                          className="text-muted-foreground hover:text-destructive"
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+                <ArrowRight className="h-5 w-5 text-muted-foreground mb-2 hidden sm:block" />
+
+                {/* AND Margin */}
+                <div className="flex-1 min-w-[160px] space-y-2">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">AND Margin ≥</Label>
+                  <div className="relative">
+                    <Input
+                      type="number"
+                      placeholder="50"
+                      value={marginValue}
+                      onChange={(e) => setMarginValue(e.target.value)}
+                      className="h-11 pr-10 text-lg font-semibold"
+                      min="0"
+                      max="100"
+                    />
+                    <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                      <Percent className="h-4 w-4 text-muted-foreground" />
                     </div>
-                  ))
-                )}
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Simulator */}
-        <div className="space-y-6">
-          <div className="bg-card rounded-lg border border-border shadow-card p-6">
-            <h2 className="text-lg font-semibold text-foreground mb-6">Shipping Simulator</h2>
-            <p className="text-sm text-muted-foreground mb-6">
-              Test how the system decides whether to offer free shipping based on your margin rules.
-            </p>
-            
-            {/* Simulator Inputs */}
-            <div className="space-y-4 pb-6 border-b border-border">
-              <div className="grid gap-4 sm:grid-cols-2">
-                <div className="space-y-2">
-                  <Label htmlFor="cartTotal">Cart Total ($)</Label>
-                  <Input
-                    id="cartTotal"
-                    type="number"
-                    placeholder="e.g. 100"
-                    value={cartTotal}
-                    onChange={(e) => setCartTotal(e.target.value)}
-                  />
+                  </div>
+                  <p className="text-xs text-muted-foreground">Your average profit margin for this category</p>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="simCategory">Product Category</Label>
-                  <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-                    <SelectTrigger id="simCategory">
-                      <SelectValue placeholder="Select category" />
+
+                <ArrowRight className="h-5 w-5 text-muted-foreground mb-2 hidden sm:block" />
+
+                {/* THEN Action */}
+                <div className="flex-1 min-w-[200px] space-y-2">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">THEN</Label>
+                  <Select value={selectedAction} onValueChange={setSelectedAction}>
+                    <SelectTrigger className="h-11">
+                      <SelectValue placeholder="Select action" />
                     </SelectTrigger>
-                    <SelectContent>
-                      {rules.filter(r => r.active).map(rule => (
-                        <SelectItem key={rule.category} value={rule.category}>
-                          {rule.category}
-                        </SelectItem>
+                    <SelectContent className="bg-card border-border">
+                      {actions.map(action => (
+                        <SelectItem key={action.value} value={action.value}>{action.label}</SelectItem>
                       ))}
                     </SelectContent>
                   </Select>
                 </div>
               </div>
-              <Button onClick={runSimulation} className="w-full sm:w-auto">
-                <PlayCircle className="h-4 w-4 mr-2" />
-                Run Simulation
-              </Button>
+
+              {/* Preview */}
+              {selectedCategory && marginValue && selectedAction && (
+                <div className="mt-6 p-4 rounded-lg bg-surface border border-border animate-fade-in">
+                  <p className="text-sm text-muted-foreground mb-1">Rule Preview:</p>
+                  <p className="text-foreground">
+                    When a cart contains <Badge variant="secondary" className="mx-1">{selectedCategory}</Badge> 
+                    with margin ≥ <span className="font-semibold text-success">{marginValue}%</span>, 
+                    then <span className="font-medium">{getActionLabel(selectedAction).toLowerCase()}</span>.
+                  </p>
+                </div>
+              )}
             </div>
 
-            {/* Simulation Result */}
-            {simulationResult && (
-              <div className="mt-6 animate-fade-in">
-                <div className={`p-4 rounded-lg border-2 ${
-                  simulationResult.approved 
-                    ? "bg-success-light border-success/30" 
-                    : "bg-destructive-light border-destructive/30"
-                }`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    {simulationResult.approved ? (
-                      <>
-                        <CheckCircle className="h-6 w-6 text-success" />
-                        <div>
-                          <p className="font-semibold text-success">APPROVED</p>
-                          <p className="text-sm text-success/80">Profit Protected</p>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <XCircle className="h-6 w-6 text-destructive" />
-                        <div>
-                          <p className="font-semibold text-destructive">REJECTED</p>
-                          <p className="text-sm text-destructive/80">Low Margin</p>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  
-                  {/* Math Breakdown */}
-                  <div className="grid grid-cols-2 gap-3 pt-4 border-t border-border/50">
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Revenue</p>
-                      <p className="text-lg font-semibold text-foreground">${simulationResult.revenue.toFixed(2)}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Est. Profit</p>
-                      <p className="text-lg font-semibold text-foreground">${simulationResult.profit.toFixed(2)}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Shipping Cost</p>
-                      <p className="text-lg font-semibold text-foreground">${simulationResult.shippingCost.toFixed(2)}</p>
-                    </div>
-                    <div>
-                      <p className="text-xs text-muted-foreground uppercase tracking-wide">Net Upside</p>
-                      <p className={`text-lg font-semibold ${
-                        simulationResult.netUpside >= 0 ? "text-success" : "text-destructive"
-                      }`}>
-                        ${simulationResult.netUpside.toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
+            <div className="px-6 py-4 bg-surface/50 border-t border-border rounded-b-lg">
+              <Button onClick={handleCreateRule} className="gap-2">
+                <Plus className="h-4 w-4" />
+                Create Rule
+              </Button>
+            </div>
+          </div>
+        </div>
+
+        {/* Safety Guardrails - 1 column */}
+        <div className="lg:col-span-1">
+          <div className="bg-card rounded-lg border border-border shadow-card h-full">
+            <div className="p-6 border-b border-border">
+              <div className="flex items-center gap-3">
+                <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-warning/10">
+                  <Shield className="h-5 w-5 text-warning" />
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold text-foreground">Safety Guardrails</h2>
+                  <p className="text-sm text-muted-foreground">Absolute limits to protect profits</p>
                 </div>
               </div>
-            )}
+            </div>
+            
+            <div className="p-6 space-y-6">
+              {/* Minimum Profit Protection */}
+              <div className="space-y-4">
+                <div className="flex items-center justify-between">
+                  <div className="space-y-0.5">
+                    <Label className="text-sm font-medium">Minimum Net Profit</Label>
+                    <p className="text-xs text-muted-foreground">Never lose money on shipping</p>
+                  </div>
+                  <Switch 
+                    checked={minProfitEnabled} 
+                    onCheckedChange={setMinProfitEnabled}
+                  />
+                </div>
+                
+                {minProfitEnabled && (
+                  <div className="pl-0 animate-fade-in">
+                    <Label className="text-xs text-muted-foreground">
+                      Never offer free shipping if profit drops below:
+                    </Label>
+                    <div className="relative mt-2">
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground">$</span>
+                      <Input
+                        type="number"
+                        value={minProfitAmount}
+                        onChange={(e) => setMinProfitAmount(e.target.value)}
+                        className="pl-7"
+                        placeholder="10"
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Additional guardrails info */}
+              <div className="p-3 rounded-lg bg-success-light/50 border border-success/20">
+                <p className="text-xs text-success font-medium mb-1">Profit Protection Active</p>
+                <p className="text-xs text-muted-foreground">
+                  ShipConvert will never recommend free shipping if it would result in a net loss.
+                </p>
+              </div>
+            </div>
           </div>
+        </div>
+      </div>
+
+      {/* Active Rules Table */}
+      <div className="mt-8">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h2 className="text-lg font-semibold text-foreground">Active Rules</h2>
+            <p className="text-sm text-muted-foreground">Rules are evaluated in priority order</p>
+          </div>
+          <Badge variant="secondary" className="text-xs">
+            {rules.filter(r => r.active).length} of {rules.length} active
+          </Badge>
+        </div>
+
+        <div className="bg-card rounded-lg border border-border shadow-card overflow-hidden">
+          <table className="w-full">
+            <thead>
+              <tr className="border-b border-border bg-surface">
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider w-16">Priority</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Category</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Est. Margin</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Action</th>
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
+                <th className="px-4 py-3 text-right text-xs font-medium text-muted-foreground uppercase tracking-wider w-24">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-border">
+              {rules.length === 0 ? (
+                <tr>
+                  <td colSpan={6} className="px-4 py-12 text-center">
+                    <p className="text-muted-foreground">No rules configured yet.</p>
+                    <p className="text-sm text-muted-foreground mt-1">Create your first margin rule above.</p>
+                  </td>
+                </tr>
+              ) : (
+                rules.map((rule) => (
+                  <tr key={rule.id} className={`hover:bg-surface/50 transition-colors ${!rule.active ? 'opacity-50' : ''}`}>
+                    <td className="px-4 py-4">
+                      <div className="flex items-center gap-2">
+                        <GripVertical className="h-4 w-4 text-muted-foreground/50 cursor-grab" />
+                        <span className="text-sm font-medium text-foreground">{rule.priority}</span>
+                      </div>
+                    </td>
+                    <td className="px-4 py-4">
+                      <Badge variant="secondary" className="font-normal">
+                        {rule.category}
+                      </Badge>
+                    </td>
+                    <td className="px-4 py-4">
+                      <span className="text-sm font-semibold text-success">{rule.margin}%</span>
+                    </td>
+                    <td className="px-4 py-4">
+                      <span className="text-sm text-foreground">{getActionLabel(rule.action)}</span>
+                    </td>
+                    <td className="px-4 py-4">
+                      <Switch
+                        checked={rule.active}
+                        onCheckedChange={() => handleToggleRule(rule.id)}
+                      />
+                    </td>
+                    <td className="px-4 py-4">
+                      <div className="flex items-center justify-end gap-1">
+                        <Button 
+                          variant="ghost" 
+                          size="icon"
+                          className="h-8 w-8 text-muted-foreground hover:text-foreground"
+                        >
+                          <Pencil className="h-4 w-4" />
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="icon"
+                          onClick={() => handleDeleteRule(rule.id)}
+                          className="h-8 w-8 text-muted-foreground hover:text-destructive"
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
         </div>
       </div>
     </DashboardLayout>
