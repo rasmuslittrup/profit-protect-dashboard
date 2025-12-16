@@ -9,6 +9,7 @@ import LivePreview from "./pages/LivePreview";
 import Analytics from "./pages/Analytics";
 import PerformanceDeepDive from "./pages/PerformanceDeepDive";
 import Settings from "./pages/Settings";
+import Onboarding from "./pages/Onboarding";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -21,6 +22,7 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/onboarding" element={<Onboarding />} />
           <Route path="/profit-engine" element={<ProfitEngine />} />
           <Route path="/live-preview" element={<LivePreview />} />
           <Route path="/analytics" element={<Analytics />} />
