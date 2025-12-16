@@ -27,7 +27,7 @@ export default function Dashboard() {
       subtitle="Monitor your shipping optimization performance"
     >
       {/* KPI Grid */}
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4 mb-8">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4 mb-6">
         <KpiCard
           title="Total Profit Saved"
           value="$24,892"
@@ -57,75 +57,65 @@ export default function Dashboard() {
       </div>
 
       {/* Quick Actions & Activity */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-4 lg:grid-cols-3">
         {/* Quick Actions */}
-        <div className="lg:col-span-1 space-y-4">
-          <h2 className="text-lg font-semibold text-foreground">Quick Actions</h2>
-          <div className="space-y-3">
-            <Link to="/profit-engine">
-              <div className="group bg-card rounded-lg border border-border p-4 shadow-card transition-all hover:shadow-card-hover hover:border-primary/30 cursor-pointer">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                    <Zap className="h-5 w-5 text-primary" />
+        <div className="lg:col-span-1">
+          <div className="bg-card rounded-lg border border-border shadow-card p-5">
+            <h2 className="text-base font-semibold text-foreground mb-4">Quick Actions</h2>
+            <div className="space-y-3">
+              <Link to="/profit-engine">
+                <div className="group flex items-center gap-3 p-3 rounded-lg border border-border bg-card hover:bg-muted transition-colors cursor-pointer">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-muted">
+                    <Zap className="h-4 w-4 text-foreground" />
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground">Configure Margins</p>
-                    <p className="text-sm text-muted-foreground">Set up profit rules</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground">Configure Margins</p>
+                    <p className="text-xs text-muted-foreground">Set up profit rules</p>
                   </div>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </div>
-              </div>
-            </Link>
-            <Link to="/profit-engine">
-              <div className="group bg-card rounded-lg border border-border p-4 shadow-card transition-all hover:shadow-card-hover hover:border-primary/30 cursor-pointer">
-                <div className="flex items-center gap-4">
-                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-success/10">
-                    <Package className="h-5 w-5 text-success" />
+              </Link>
+              <Link to="/profit-engine">
+                <div className="group flex items-center gap-3 p-3 rounded-lg border border-border bg-card hover:bg-muted transition-colors cursor-pointer">
+                  <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-success/10">
+                    <Package className="h-4 w-4 text-success" />
                   </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-foreground">Test Simulator</p>
-                    <p className="text-sm text-muted-foreground">Run shipping scenarios</p>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-foreground">Test Simulator</p>
+                    <p className="text-xs text-muted-foreground">Run shipping scenarios</p>
                   </div>
-                  <ArrowRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors" />
+                  <ArrowRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
                 </div>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </div>
         </div>
 
-        {/* Recent Activity */}
+        {/* Recent Activity - Polaris ResourceList style */}
         <div className="lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Recent Activity</h2>
-            <Button variant="ghost" size="sm" className="text-muted-foreground">
-              View all
-            </Button>
-          </div>
-          <div className="bg-card rounded-lg border border-border shadow-card overflow-hidden">
-            <table className="w-full">
-              <thead>
-                <tr className="border-b border-border bg-surface">
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Event</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Order</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Margin</th>
-                  <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">Status</th>
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-border">
-                {recentActivity.map((item) => (
-                  <tr key={item.id} className="hover:bg-surface/50 transition-colors">
-                    <td className="px-4 py-3 text-sm text-foreground">{item.event}</td>
-                    <td className="px-4 py-3 text-sm text-muted-foreground font-mono">{item.order}</td>
-                    <td className="px-4 py-3 text-sm text-foreground font-medium">{item.margin}</td>
-                    <td className="px-4 py-3">
-                      <StatusBadge variant={item.status === "approved" ? "success" : "error"}>
-                        {item.status === "approved" ? "Approved" : "Rejected"}
-                      </StatusBadge>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="bg-card rounded-lg border border-border shadow-card">
+            <div className="flex items-center justify-between p-4 border-b border-border">
+              <h2 className="text-base font-semibold text-foreground">Recent Activity</h2>
+              <Button variant="ghost" size="sm" className="text-muted-foreground text-xs">
+                View all
+              </Button>
+            </div>
+            <div className="divide-y divide-border">
+              {recentActivity.map((item) => (
+                <div key={item.id} className="flex items-center justify-between px-4 py-3 hover:bg-muted/50 transition-colors">
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm text-foreground">{item.event}</span>
+                    <span className="text-sm text-muted-foreground font-mono">{item.order}</span>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    <span className="text-sm font-medium text-foreground">{item.margin}</span>
+                    <StatusBadge variant={item.status === "approved" ? "success" : "error"}>
+                      {item.status === "approved" ? "Approved" : "Rejected"}
+                    </StatusBadge>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

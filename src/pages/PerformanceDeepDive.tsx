@@ -71,78 +71,78 @@ export default function PerformanceDeepDive() {
       title="Performance Deep Dive"
       subtitle="A/B test analysis proving ShipConvert ROI"
     >
-      <div className="space-y-8">
+      <div className="space-y-6">
         {/* Header with date range */}
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-lg text-sm">
+          <div className="flex items-center gap-2 px-3 py-1.5 bg-muted rounded-lg text-sm">
             <Calendar className="w-4 h-4 text-muted-foreground" />
-            <span className="font-medium">Last 30 Days</span>
+            <span className="font-medium text-foreground">Last 30 Days</span>
             <span className="text-muted-foreground">• Nov 16 – Dec 16, 2024</span>
           </div>
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <div className="w-3 h-3 rounded-full bg-muted-foreground/40" />
+            <div className="w-3 h-3 rounded-full bg-chart-muted" />
             <span>50% Hold-out</span>
             <span className="mx-2">•</span>
-            <div className="w-3 h-3 rounded-full bg-emerald" />
+            <div className="w-3 h-3 rounded-full bg-success" />
             <span>50% ShipConvert</span>
           </div>
         </div>
 
         {/* Split Comparison Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Control Group */}
-          <div className="relative bg-card rounded-xl border border-border shadow-card p-6 overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-muted-foreground/30" />
-            <div className="flex items-center gap-2 mb-6">
+          <div className="relative bg-card rounded-lg border border-border shadow-card p-5 overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-chart-muted" />
+            <div className="flex items-center gap-2 mb-5">
               <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
                 <Users className="w-4 h-4 text-muted-foreground" />
               </div>
               <div>
                 <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider">Control Group A</p>
-                <h3 className="text-lg font-semibold text-foreground">Standard Checkout</h3>
+                <h3 className="text-base font-semibold text-foreground">Standard Checkout</h3>
               </div>
             </div>
             
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Conversion Rate</p>
-                <p className="text-3xl font-bold text-foreground">2.1%</p>
+                <p className="text-2xl font-bold text-foreground">2.1%</p>
               </div>
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Net Profit per Visitor</p>
-                <p className="text-3xl font-bold text-foreground">$1.20</p>
+                <p className="text-2xl font-bold text-foreground">$1.20</p>
               </div>
               <div className="pt-4 border-t border-border">
                 <p className="text-sm text-muted-foreground mb-1">Total Net Profit</p>
-                <p className="text-2xl font-semibold text-foreground">$32,000</p>
+                <p className="text-xl font-semibold text-foreground">$32,000</p>
               </div>
             </div>
           </div>
 
           {/* ShipConvert Group */}
-          <div className="relative bg-card rounded-xl border-2 border-emerald/30 shadow-card p-6 overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-emerald" />
-            <div className="absolute top-4 right-4">
-              <span className="px-2 py-1 bg-emerald/10 text-emerald text-xs font-semibold rounded-full">
+          <div className="relative bg-card rounded-lg border-2 border-success/30 shadow-card p-5 overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-1 bg-success" />
+            <div className="absolute top-3 right-3">
+              <span className="px-2 py-1 bg-success/10 text-success text-xs font-semibold rounded-full">
                 WINNER
               </span>
             </div>
-            <div className="flex items-center gap-2 mb-6">
-              <div className="w-8 h-8 rounded-lg bg-emerald/10 flex items-center justify-center">
-                <TrendingUp className="w-4 h-4 text-emerald" />
+            <div className="flex items-center gap-2 mb-5">
+              <div className="w-8 h-8 rounded-lg bg-success/10 flex items-center justify-center">
+                <TrendingUp className="w-4 h-4 text-success" />
               </div>
               <div>
-                <p className="text-xs font-medium text-emerald uppercase tracking-wider">Test Group B</p>
-                <h3 className="text-lg font-semibold text-foreground">ShipConvert Interventions</h3>
+                <p className="text-xs font-medium text-success uppercase tracking-wider">Test Group B</p>
+                <h3 className="text-base font-semibold text-foreground">ShipConvert Interventions</h3>
               </div>
             </div>
             
-            <div className="space-y-6">
+            <div className="space-y-5">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Conversion Rate</p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-foreground">2.8%</p>
-                  <span className="flex items-center text-emerald text-sm font-medium">
+                  <p className="text-2xl font-bold text-foreground">2.8%</p>
+                  <span className="flex items-center text-success text-sm font-medium">
                     <ArrowUpRight className="w-4 h-4" />
                     +33%
                   </span>
@@ -151,18 +151,18 @@ export default function PerformanceDeepDive() {
               <div>
                 <p className="text-sm text-muted-foreground mb-1">Net Profit per Visitor</p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-3xl font-bold text-foreground">$1.45</p>
-                  <span className="flex items-center text-emerald text-sm font-medium">
+                  <p className="text-2xl font-bold text-foreground">$1.45</p>
+                  <span className="flex items-center text-success text-sm font-medium">
                     <ArrowUpRight className="w-4 h-4" />
                     +21%
                   </span>
                 </div>
               </div>
-              <div className="pt-4 border-t border-emerald/20">
+              <div className="pt-4 border-t border-success/20">
                 <p className="text-sm text-muted-foreground mb-1">Total Net Profit</p>
                 <div className="flex items-baseline gap-2">
-                  <p className="text-2xl font-semibold text-emerald">$43,500</p>
-                  <span className="text-emerald text-sm font-medium">+$11,500</span>
+                  <p className="text-xl font-semibold text-success">$43,500</p>
+                  <span className="text-success text-sm font-medium">+$11,500</span>
                 </div>
               </div>
             </div>
@@ -170,25 +170,25 @@ export default function PerformanceDeepDive() {
         </div>
 
         {/* Cumulative Profit Chart */}
-        <div className="bg-card rounded-xl border border-border shadow-card p-6">
-          <div className="flex items-center justify-between mb-6">
+        <div className="bg-card rounded-lg border border-border shadow-card p-5">
+          <div className="flex items-center justify-between mb-5">
             <div>
-              <h3 className="text-lg font-semibold text-foreground">Net Profit Cumulative</h3>
+              <h3 className="text-base font-semibold text-foreground">Net Profit Cumulative</h3>
               <p className="text-sm text-muted-foreground">Watch the divergence over 30 days</p>
             </div>
             <div className="flex items-center gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-muted-foreground/50" />
+                <div className="w-3 h-3 rounded-full bg-chart-muted" />
                 <span className="text-muted-foreground">Standard</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-emerald" />
+                <div className="w-3 h-3 rounded-full bg-success" />
                 <span className="text-muted-foreground">ShipConvert</span>
               </div>
             </div>
           </div>
           
-          <div className="h-[320px]">
+          <div className="h-[280px]">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={cumulativeProfitData}>
                 <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" />
@@ -222,17 +222,17 @@ export default function PerformanceDeepDive() {
                 <Line 
                   type="monotone" 
                   dataKey="standard" 
-                  stroke="hsl(var(--muted-foreground))"
+                  stroke="hsl(var(--chart-muted))"
                   strokeWidth={2}
-                  dot={{ fill: 'hsl(var(--muted-foreground))', strokeWidth: 0, r: 4 }}
+                  dot={{ fill: 'hsl(var(--chart-muted))', strokeWidth: 0, r: 4 }}
                   name="Standard Checkout"
                 />
                 <Line 
                   type="monotone" 
                   dataKey="shipconvert" 
-                  stroke="hsl(var(--emerald))"
+                  stroke="hsl(var(--success))"
                   strokeWidth={3}
-                  dot={{ fill: 'hsl(var(--emerald))', strokeWidth: 0, r: 4 }}
+                  dot={{ fill: 'hsl(var(--success))', strokeWidth: 0, r: 4 }}
                   name="ShipConvert"
                 />
               </LineChart>
@@ -240,26 +240,26 @@ export default function PerformanceDeepDive() {
           </div>
           
           {/* Profit Gap Callout */}
-          <div className="mt-4 p-4 bg-emerald/5 rounded-lg border border-emerald/20">
+          <div className="mt-4 p-4 bg-success/5 rounded-lg border border-success/20">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full bg-emerald/10 flex items-center justify-center">
-                  <TrendingUp className="w-5 h-5 text-emerald" />
+                <div className="w-9 h-9 rounded-full bg-success/10 flex items-center justify-center">
+                  <TrendingUp className="w-4 h-4 text-success" />
                 </div>
                 <div>
                   <p className="text-sm font-medium text-foreground">Incremental Profit Generated</p>
                   <p className="text-xs text-muted-foreground">Compared to standard checkout over 30 days</p>
                 </div>
               </div>
-              <p className="text-2xl font-bold text-emerald">+$11,500</p>
+              <p className="text-xl font-bold text-success">+$11,500</p>
             </div>
           </div>
         </div>
 
         {/* Breakdown Table */}
-        <div className="bg-card rounded-xl border border-border shadow-card overflow-hidden">
-          <div className="p-6 border-b border-border">
-            <h3 className="text-lg font-semibold text-foreground">Detailed Breakdown</h3>
+        <div className="bg-card rounded-lg border border-border shadow-card overflow-hidden">
+          <div className="p-5 border-b border-border">
+            <h3 className="text-base font-semibold text-foreground">Detailed Breakdown</h3>
             <p className="text-sm text-muted-foreground">The math behind the results</p>
           </div>
           
@@ -267,16 +267,16 @@ export default function PerformanceDeepDive() {
             <table className="w-full">
               <thead>
                 <tr className="border-b border-border bg-muted/30">
-                  <th className="text-left py-4 px-6 text-sm font-medium text-muted-foreground">Metric</th>
-                  <th className="text-right py-4 px-6 text-sm font-medium text-muted-foreground">Standard</th>
-                  <th className="text-right py-4 px-6 text-sm font-medium text-muted-foreground">ShipConvert</th>
-                  <th className="text-right py-4 px-6 text-sm font-medium text-muted-foreground">Change</th>
+                  <th className="text-left py-3 px-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Metric</th>
+                  <th className="text-right py-3 px-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Standard</th>
+                  <th className="text-right py-3 px-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">ShipConvert</th>
+                  <th className="text-right py-3 px-5 text-xs font-medium text-muted-foreground uppercase tracking-wider">Change</th>
                 </tr>
               </thead>
               <tbody>
                 {breakdownData.map((row, index) => (
                   <tr key={index} className="border-b border-border last:border-0 hover:bg-muted/20 transition-colors">
-                    <td className="py-4 px-6">
+                    <td className="py-3 px-5">
                       <div className="flex items-center gap-3">
                         <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center">
                           <row.icon className="w-4 h-4 text-muted-foreground" />
@@ -284,19 +284,19 @@ export default function PerformanceDeepDive() {
                         <span className="text-sm font-medium text-foreground">{row.metric}</span>
                       </div>
                     </td>
-                    <td className="py-4 px-6 text-right text-sm text-muted-foreground font-mono">
+                    <td className="py-3 px-5 text-right text-sm text-muted-foreground font-mono">
                       {row.standard}
                     </td>
-                    <td className="py-4 px-6 text-right text-sm text-foreground font-mono font-medium">
+                    <td className="py-3 px-5 text-right text-sm text-foreground font-mono font-medium">
                       {row.shipconvert}
                     </td>
-                    <td className="py-4 px-6 text-right">
+                    <td className="py-3 px-5 text-right">
                       <span className={`inline-flex items-center gap-1 text-sm font-medium ${
                         row.metric === "Cart Abandonment Rate" 
-                          ? 'text-emerald' 
+                          ? 'text-success' 
                           : row.metric === "Shipping Cost Incurred"
-                            ? 'text-amber-600'
-                            : 'text-emerald'
+                            ? 'text-warning'
+                            : 'text-success'
                       }`}>
                         {row.changeType === "decrease" ? (
                           <ArrowDownRight className="w-4 h-4" />
@@ -313,17 +313,17 @@ export default function PerformanceDeepDive() {
           </div>
           
           {/* Math Explanation */}
-          <div className="p-6 bg-muted/30 border-t border-border">
+          <div className="p-5 bg-muted/30 border-t border-border">
             <div className="flex items-start gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center flex-shrink-0">
-                <DollarSign className="w-4 h-4 text-primary" />
+              <div className="w-8 h-8 rounded-lg bg-muted flex items-center justify-center flex-shrink-0">
+                <DollarSign className="w-4 h-4 text-foreground" />
               </div>
               <div>
                 <p className="text-sm font-medium text-foreground mb-1">The Math That Matters</p>
                 <p className="text-sm text-muted-foreground">
                   ShipConvert spent <span className="font-medium text-foreground">$1,780 more</span> on shipping, 
-                  but generated <span className="font-medium text-emerald">$11,500 more</span> in net profit. 
-                  That's a <span className="font-medium text-emerald">6.5x return</span> on shipping investment.
+                  but generated <span className="font-medium text-success">$11,500 more</span> in net profit. 
+                  That's a <span className="font-medium text-success">6.5x return</span> on shipping investment.
                 </p>
               </div>
             </div>

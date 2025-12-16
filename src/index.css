@@ -2,118 +2,114 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    /* Brand Blue - Clean & Vibrant */
-    --background: 210 20% 98%;
-    --foreground: 222 47% 11%;
+    /* Shopify Polaris Design Tokens */
+    
+    /* Background - Shopify Admin Gray */
+    --background: 210 11% 95%;
+    --foreground: 210 11% 13%;
     
     /* Surface hierarchy */
     --surface: 0 0% 100%;
-    --surface-hover: 210 20% 96%;
+    --surface-hover: 210 11% 96%;
     
-    /* Cards - Pure White */
+    /* Cards - Pure White with subtle styling */
     --card: 0 0% 100%;
-    --card-foreground: 222 47% 11%;
+    --card-foreground: 210 11% 13%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222 47% 11%;
+    --popover-foreground: 210 11% 13%;
 
-    /* Primary - Temply Blue */
-    --primary: 209 100% 50%;
+    /* Primary - Shopify Dark/Black for actions */
+    --primary: 210 11% 19%;
     --primary-foreground: 0 0% 100%;
-    --primary-hover: 209 100% 45%;
+    --primary-hover: 210 11% 13%;
 
-    /* Secondary - Clean Gray */
-    --secondary: 210 20% 96%;
-    --secondary-foreground: 222 47% 11%;
+    /* Secondary - Light Gray for secondary buttons */
+    --secondary: 210 11% 96%;
+    --secondary-foreground: 210 11% 19%;
 
     /* Muted */
-    --muted: 210 20% 96%;
-    --muted-foreground: 215 16% 47%;
+    --muted: 210 11% 96%;
+    --muted-foreground: 210 11% 45%;
 
     /* Accent */
-    --accent: 210 20% 96%;
-    --accent-foreground: 209 100% 50%;
+    --accent: 210 11% 96%;
+    --accent-foreground: 210 11% 19%;
 
-    /* Success - Emerald for profit */
-    --success: 160 84% 39%;
+    /* Success - Shopify Green */
+    --success: 147 69% 43%;
     --success-foreground: 0 0% 100%;
-    --success-light: 160 84% 95%;
+    --success-light: 147 69% 95%;
 
     /* Destructive/Error */
-    --destructive: 0 84% 60%;
+    --destructive: 0 72% 51%;
     --destructive-foreground: 0 0% 100%;
-    --destructive-light: 0 84% 95%;
+    --destructive-light: 0 72% 95%;
 
-    /* Warning */
-    --warning: 38 92% 50%;
-    --warning-foreground: 0 0% 100%;
-    --warning-light: 38 92% 95%;
+    /* Warning - Shopify Yellow/Amber */
+    --warning: 36 100% 50%;
+    --warning-foreground: 210 11% 13%;
+    --warning-light: 36 100% 95%;
 
-    /* Border and Input */
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
-    --ring: 209 100% 50%;
+    /* Info - Shopify Teal */
+    --info: 184 100% 35%;
+    --info-foreground: 0 0% 100%;
+    --info-light: 184 100% 95%;
 
-    --radius: 0.75rem;
+    /* Border and Input - Polaris style thick borders */
+    --border: 210 11% 85%;
+    --input: 210 11% 85%;
+    --ring: 210 11% 19%;
 
-    /* Sidebar - Vibrant Temply Blue */
-    --sidebar-background: 209 100% 50%;
-    --sidebar-foreground: 0 0% 100%;
-    --sidebar-primary: 0 0% 100%;
-    --sidebar-primary-foreground: 209 100% 50%;
-    --sidebar-accent: 0 0% 100%;
-    --sidebar-accent-foreground: 209 100% 50%;
-    --sidebar-border: 209 100% 45%;
-    --sidebar-ring: 0 0% 100%;
+    --radius: 0.5rem;
 
-    /* Chart colors */
-    --chart-primary: 209 100% 50%;
-    --chart-success: 160 84% 39%;
-    --chart-muted: 215 16% 75%;
+    /* Tab navigation */
+    --tab-active: 210 11% 13%;
+    --tab-hover: 210 11% 96%;
+
+    /* Chart colors - Business harmonious palette */
+    --chart-primary: 210 70% 45%;
+    --chart-success: 147 69% 43%;
+    --chart-muted: 210 11% 75%;
+    --chart-navy: 215 50% 35%;
+    --chart-teal: 184 70% 40%;
   }
 
   .dark {
-    --background: 220 13% 9%;
-    --foreground: 210 20% 98%;
+    --background: 210 11% 9%;
+    --foreground: 210 11% 96%;
 
-    --card: 220 13% 12%;
-    --card-foreground: 210 20% 98%;
+    --card: 210 11% 12%;
+    --card-foreground: 210 11% 96%;
 
-    --popover: 220 13% 12%;
-    --popover-foreground: 210 20% 98%;
+    --popover: 210 11% 12%;
+    --popover-foreground: 210 11% 96%;
 
-    --primary: 209 100% 50%;
-    --primary-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 210 11% 13%;
 
-    --secondary: 220 13% 18%;
-    --secondary-foreground: 210 20% 98%;
+    --secondary: 210 11% 18%;
+    --secondary-foreground: 210 11% 96%;
 
-    --muted: 220 13% 18%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 210 11% 18%;
+    --muted-foreground: 210 11% 60%;
 
-    --accent: 220 13% 18%;
-    --accent-foreground: 210 20% 98%;
+    --accent: 210 11% 18%;
+    --accent-foreground: 210 11% 96%;
 
-    --destructive: 0 62% 30%;
-    --destructive-foreground: 210 20% 98%;
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 210 11% 96%;
 
-    --border: 220 13% 18%;
-    --input: 220 13% 18%;
-    --ring: 209 100% 50%;
+    --border: 210 11% 22%;
+    --input: 210 11% 22%;
+    --ring: 0 0% 100%;
 
-    /* Sidebar - Dark */
-    --sidebar-background: 220 13% 9%;
-    --sidebar-foreground: 210 20% 80%;
-    --sidebar-primary: 209 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 220 13% 15%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 220 13% 18%;
-    --sidebar-ring: 209 100% 50%;
+    --tab-active: 0 0% 100%;
+    --tab-hover: 210 11% 18%;
   }
 }
 
@@ -124,7 +120,16 @@
 
   body {
     @apply bg-background text-foreground font-sans antialiased;
-    font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'San Francisco', 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+  }
+
+  /* Polaris-style focus state */
+  input:focus,
+  select:focus,
+  textarea:focus,
+  button:focus-visible {
+    outline: 2px solid hsl(var(--ring));
+    outline-offset: 1px;
   }
 }
 
@@ -132,4 +137,15 @@
   .text-balance {
     text-wrap: balance;
   }
+}
+
+/* Polaris Card styling */
+.polaris-card {
+  @apply bg-card rounded-lg border border-border shadow-sm;
+}
+
+/* Polaris focus ring for inputs */
+.polaris-input-focus:focus {
+  @apply ring-2 ring-ring ring-offset-1;
+  border-color: hsl(var(--ring));
 }
