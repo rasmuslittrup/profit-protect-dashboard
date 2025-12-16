@@ -6,37 +6,36 @@
 
 @layer base {
   :root {
-    /* Blue Enterprise - Professional & Bold */
-    --background: 214 100% 97%;
-    --foreground: 224 57% 21%;
+    /* Brand Blue - Clean & Vibrant */
+    --background: 210 20% 98%;
+    --foreground: 222 47% 11%;
     
     /* Surface hierarchy */
     --surface: 0 0% 100%;
-    --surface-hover: 214 95% 95%;
+    --surface-hover: 210 20% 96%;
     
-    /* Cards - Pure White with blue tint */
+    /* Cards - Pure White */
     --card: 0 0% 100%;
-    --card-foreground: 224 57% 21%;
-    --card-border: 214 95% 93%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 224 57% 21%;
+    --popover-foreground: 222 47% 11%;
 
     /* Primary - Temply Blue */
     --primary: 209 100% 50%;
     --primary-foreground: 0 0% 100%;
     --primary-hover: 209 100% 45%;
 
-    /* Secondary */
-    --secondary: 214 95% 93%;
-    --secondary-foreground: 224 57% 21%;
+    /* Secondary - Clean Gray */
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 222 47% 11%;
 
     /* Muted */
-    --muted: 214 95% 95%;
-    --muted-foreground: 224 40% 45%;
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
 
-    /* Accent - Light Blue */
-    --accent: 214 95% 93%;
+    /* Accent */
+    --accent: 210 20% 96%;
     --accent-foreground: 209 100% 50%;
 
     /* Success - Emerald for profit */
@@ -55,26 +54,26 @@
     --warning-light: 38 92% 95%;
 
     /* Border and Input */
-    --border: 214 95% 93%;
-    --input: 214 95% 93%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
     --ring: 209 100% 50%;
 
     --radius: 0.75rem;
 
-    /* Sidebar - Deep Royal Navy */
-    --sidebar-background: 224 57% 21%;
-    --sidebar-foreground: 214 95% 93%;
-    --sidebar-primary: 209 100% 50%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 224 64% 33%;
-    --sidebar-accent-foreground: 0 0% 100%;
-    --sidebar-border: 224 50% 28%;
-    --sidebar-ring: 209 100% 50%;
+    /* Sidebar - Vibrant Temply Blue */
+    --sidebar-background: 209 100% 50%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-primary: 0 0% 100%;
+    --sidebar-primary-foreground: 209 100% 50%;
+    --sidebar-accent: 0 0% 100%;
+    --sidebar-accent-foreground: 209 100% 50%;
+    --sidebar-border: 209 100% 45%;
+    --sidebar-ring: 0 0% 100%;
 
     /* Chart colors */
     --chart-primary: 209 100% 50%;
     --chart-success: 160 84% 39%;
-    --chart-muted: 214 40% 70%;
+    --chart-muted: 215 16% 75%;
   }
 
   .dark {
