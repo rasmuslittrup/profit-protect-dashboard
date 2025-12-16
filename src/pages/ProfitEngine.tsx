@@ -157,10 +157,10 @@ export default function ProfitEngine() {
             
             <div className="p-6">
               {/* Rule Builder Form */}
-              <div className="flex flex-wrap items-end gap-4">
+              <div className="flex flex-wrap items-center gap-4">
                 {/* IF Category */}
-                <div className="flex-1 min-w-[180px] space-y-2">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">IF Category</Label>
+                <div className="flex-1 min-w-[180px]">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">IF Category</Label>
                   <Select value={selectedCategory} onValueChange={setSelectedCategory}>
                     <SelectTrigger className="h-11">
                       <SelectValue placeholder="Select category" />
@@ -173,11 +173,11 @@ export default function ProfitEngine() {
                   </Select>
                 </div>
 
-                <ArrowRight className="h-5 w-5 text-muted-foreground mb-2 hidden sm:block" />
+                <ArrowRight className="h-5 w-5 text-muted-foreground mt-6 hidden sm:block flex-shrink-0" />
 
                 {/* AND Margin */}
-                <div className="flex-1 min-w-[160px] space-y-2">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">AND Margin ≥</Label>
+                <div className="flex-1 min-w-[160px]">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">AND Margin ≥</Label>
                   <div className="relative">
                     <Input
                       type="number"
@@ -192,14 +192,13 @@ export default function ProfitEngine() {
                       <Percent className="h-4 w-4 text-muted-foreground" />
                     </div>
                   </div>
-                  <p className="text-xs text-muted-foreground">Your average profit margin for this category</p>
                 </div>
 
-                <ArrowRight className="h-5 w-5 text-muted-foreground mb-2 hidden sm:block" />
+                <ArrowRight className="h-5 w-5 text-muted-foreground mt-6 hidden sm:block flex-shrink-0" />
 
                 {/* THEN Action */}
-                <div className="flex-1 min-w-[200px] space-y-2">
-                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide">THEN</Label>
+                <div className="flex-1 min-w-[200px]">
+                  <Label className="text-xs font-medium text-muted-foreground uppercase tracking-wide mb-2 block">THEN</Label>
                   <Select value={selectedAction} onValueChange={setSelectedAction}>
                     <SelectTrigger className="h-11">
                       <SelectValue placeholder="Select action" />
@@ -212,6 +211,8 @@ export default function ProfitEngine() {
                   </Select>
                 </div>
               </div>
+              
+              <p className="text-xs text-muted-foreground mt-3">Enter your estimated profit margin for this product category</p>
 
               {/* Preview */}
               {selectedCategory && marginValue && selectedAction && (
