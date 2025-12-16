@@ -12,15 +12,25 @@ import {
   CreditCard,
   MapPin,
   Monitor,
-  Smartphone
+  Smartphone,
+  RotateCcw,
+  Check
 } from "lucide-react";
 
 type DeviceMode = "desktop" | "mobile";
+
+const INITIAL_SHIPPING = 369;
+const INITIAL_TOTAL = 3069;
+const SUBTOTAL = 2250;
+const TAX = 450;
 
 export default function LivePreview() {
   const [timeLeft, setTimeLeft] = useState(299);
   const [showModal, setShowModal] = useState(true);
   const [deviceMode, setDeviceMode] = useState<DeviceMode>("desktop");
+  const [shippingCost, setShippingCost] = useState(INITIAL_SHIPPING);
+  const [cartTotal, setCartTotal] = useState(INITIAL_TOTAL);
+  const [discountApplied, setDiscountApplied] = useState(false);
 
   useEffect(() => {
     if (!showModal) return;
@@ -36,6 +46,25 @@ export default function LivePreview() {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const formatPrice = (price: number) => {
+    return price.toLocaleString('da-DK') + " kr.";
+  };
+
+  const handleApplyDiscount = () => {
+    setShippingCost(0);
+    setCartTotal(SUBTOTAL + TAX); // 2700
+    setDiscountApplied(true);
+    setShowModal(false);
+  };
+
+  const handleReset = () => {
+    setShippingCost(INITIAL_SHIPPING);
+    setCartTotal(INITIAL_TOTAL);
+    setDiscountApplied(false);
+    setTimeLeft(299);
+    setShowModal(true);
   };
 
   const isMobile = deviceMode === "mobile";
@@ -60,30 +89,41 @@ export default function LivePreview() {
           </Badge>
         </div>
 
-        {/* Device Switcher */}
-        <div className="flex items-center bg-muted rounded-lg p-1">
+        <div className="flex items-center gap-4">
+          {/* Reset Link */}
           <button
-            onClick={() => setDeviceMode("desktop")}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-              deviceMode === "desktop"
-                ? "bg-card text-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
+            onClick={handleReset}
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
           >
-            <Monitor className="h-4 w-4" />
-            Desktop
+            <RotateCcw className="h-3.5 w-3.5" />
+            Nulstil Test
           </button>
-          <button
-            onClick={() => setDeviceMode("mobile")}
-            className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
-              deviceMode === "mobile"
-                ? "bg-card text-foreground shadow-sm"
-                : "text-muted-foreground hover:text-foreground"
-            }`}
-          >
-            <Smartphone className="h-4 w-4" />
-            Mobil
-          </button>
+
+          {/* Device Switcher */}
+          <div className="flex items-center bg-muted rounded-lg p-1">
+            <button
+              onClick={() => setDeviceMode("desktop")}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                deviceMode === "desktop"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Monitor className="h-4 w-4" />
+              Desktop
+            </button>
+            <button
+              onClick={() => setDeviceMode("mobile")}
+              className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-all ${
+                deviceMode === "mobile"
+                  ? "bg-card text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              <Smartphone className="h-4 w-4" />
+              Mobil
+            </button>
+          </div>
         </div>
       </div>
 
@@ -146,7 +186,7 @@ export default function LivePreview() {
                       <div>
                         <p className="text-sm font-medium text-slate-900">Premium Uldfrakke</p>
                         <p className="text-xs text-slate-500">Str.: M • Kul</p>
-                        <p className="text-sm font-semibold text-slate-900 mt-1">2.250 kr.</p>
+                        <p className="text-sm font-semibold text-slate-900 mt-1">{formatPrice(SUBTOTAL)}</p>
                       </div>
                     </div>
                   </div>
@@ -160,7 +200,9 @@ export default function LivePreview() {
                     <div className="p-2 rounded border border-slate-200 bg-slate-50">
                       <div className="flex justify-between text-xs">
                         <span className="text-slate-600">Express (2-3 dage)</span>
-                        <span className="font-medium text-slate-900">369 kr.</span>
+                        <span className={`font-medium ${shippingCost === 0 ? "text-emerald-600" : "text-slate-900"}`}>
+                          {shippingCost === 0 ? "GRATIS" : formatPrice(shippingCost)}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -169,16 +211,18 @@ export default function LivePreview() {
                   <div className="bg-white rounded-lg border border-slate-200 p-3 space-y-1.5">
                     <div className="flex justify-between text-xs text-slate-600">
                       <span>Subtotal</span>
-                      <span>2.250 kr.</span>
+                      <span>{formatPrice(SUBTOTAL)}</span>
                     </div>
                     <div className="flex justify-between text-xs text-slate-600">
                       <span>Fragt</span>
-                      <span>369 kr.</span>
+                      <span className={shippingCost === 0 ? "text-emerald-600 font-medium" : ""}>
+                        {shippingCost === 0 ? "GRATIS" : formatPrice(shippingCost)}
+                      </span>
                     </div>
                     <div className="h-px bg-slate-200 my-1" />
                     <div className="flex justify-between text-sm font-semibold text-slate-900">
                       <span>Total</span>
-                      <span>2.619 kr.</span>
+                      <span>{formatPrice(cartTotal)}</span>
                     </div>
                   </div>
 
@@ -230,18 +274,18 @@ export default function LivePreview() {
                           <div className="flex justify-between items-center mb-2">
                             <span className="text-xs text-slate-600">Express Levering</span>
                             <div className="flex items-center gap-2">
-                              <span className="text-xs text-slate-400 line-through">369 kr.</span>
+                              <span className="text-xs text-slate-400 line-through">{formatPrice(INITIAL_SHIPPING)}</span>
                               <span className="text-sm font-bold text-emerald-600">GRATIS</span>
                             </div>
                           </div>
                           <div className="h-px bg-slate-200 mb-2" />
                           <div className="flex justify-between items-center">
                             <span className="text-xs font-medium text-slate-700">Din nye total</span>
-                            <span className="text-lg font-bold text-slate-900">2.250 kr.</span>
+                            <span className="text-lg font-bold text-slate-900">{formatPrice(SUBTOTAL + TAX)}</span>
                           </div>
                           <div className="flex items-center justify-center gap-1 text-emerald-600 text-xs font-medium mt-1">
                             <ShieldCheck className="h-3 w-3" />
-                            Du sparer 369 kr.
+                            Du sparer {formatPrice(INITIAL_SHIPPING)}
                           </div>
                         </div>
 
@@ -253,11 +297,25 @@ export default function LivePreview() {
                         </div>
 
                         <button 
-                          className="w-full py-2.5 rounded-lg text-sm font-semibold bg-emerald-600 text-white flex items-center justify-center gap-2"
-                          onClick={() => setShowModal(false)}
+                          className={`w-full py-2.5 rounded-lg text-sm font-semibold flex items-center justify-center gap-2 transition-all ${
+                            discountApplied
+                              ? "bg-slate-200 text-slate-500 cursor-not-allowed"
+                              : "bg-emerald-600 text-white hover:bg-emerald-700"
+                          }`}
+                          onClick={handleApplyDiscount}
+                          disabled={discountApplied}
                         >
-                          <Truck className="h-4 w-4" />
-                          Få Fri Fragt Nu
+                          {discountApplied ? (
+                            <>
+                              <Check className="h-4 w-4" />
+                              Rabat Anvendt ✓
+                            </>
+                          ) : (
+                            <>
+                              <Truck className="h-4 w-4" />
+                              Få Fri Fragt Nu
+                            </>
+                          )}
                         </button>
 
                         <button 
@@ -339,7 +397,9 @@ export default function LivePreview() {
                       <div className="space-y-2">
                         <div className="flex items-center justify-between p-2.5 rounded-md border border-slate-200 bg-slate-50">
                           <span className="text-sm text-slate-600">Express Levering (2-3 dage)</span>
-                          <span className="text-sm font-medium text-slate-900">369 kr.</span>
+                          <span className={`text-sm font-medium ${shippingCost === 0 ? "text-emerald-600" : "text-slate-900"}`}>
+                            {shippingCost === 0 ? "GRATIS" : formatPrice(shippingCost)}
+                          </span>
                         </div>
                         <div className="flex items-center justify-between p-2.5 rounded-md border border-slate-200">
                           <span className="text-sm text-slate-600">Standard Levering (5-7 dage)</span>
@@ -362,7 +422,7 @@ export default function LivePreview() {
                         <div className="flex-1">
                           <p className="text-sm font-medium text-slate-900">Premium Uldfrakke</p>
                           <p className="text-xs text-slate-500">Str.: M | Farve: Kul</p>
-                          <p className="text-sm font-medium text-slate-900 mt-1">2.250 kr.</p>
+                          <p className="text-sm font-medium text-slate-900 mt-1">{formatPrice(SUBTOTAL)}</p>
                         </div>
                       </div>
 
@@ -370,22 +430,24 @@ export default function LivePreview() {
                       <div className="py-3 space-y-1.5 text-sm">
                         <div className="flex justify-between text-slate-600">
                           <span>Subtotal</span>
-                          <span>2.250 kr.</span>
+                          <span>{formatPrice(SUBTOTAL)}</span>
                         </div>
                         <div className="flex justify-between text-slate-600">
                           <span>Express Levering</span>
-                          <span>369 kr.</span>
+                          <span className={shippingCost === 0 ? "text-emerald-600 font-medium" : ""}>
+                            {shippingCost === 0 ? "GRATIS" : formatPrice(shippingCost)}
+                          </span>
                         </div>
                         <div className="flex justify-between text-slate-600">
                           <span>Moms</span>
-                          <span>450 kr.</span>
+                          <span>{formatPrice(TAX)}</span>
                         </div>
                       </div>
 
                       <div className="pt-3 border-t border-slate-200">
                         <div className="flex justify-between font-semibold text-slate-900 text-sm">
                           <span>Total</span>
-                          <span>3.069 kr.</span>
+                          <span>{formatPrice(cartTotal)}</span>
                         </div>
                       </div>
 
@@ -446,18 +508,18 @@ export default function LivePreview() {
                           <div className="flex items-center justify-between">
                             <span className="text-sm text-slate-600">Express Levering</span>
                             <div className="flex items-center gap-2">
-                              <span className="text-sm text-slate-400 line-through">369 kr.</span>
+                              <span className="text-sm text-slate-400 line-through">{formatPrice(INITIAL_SHIPPING)}</span>
                               <span className="text-base font-bold text-emerald-600">GRATIS</span>
                             </div>
                           </div>
                           <div className="h-px bg-slate-200" />
                           <div className="flex items-center justify-between">
                             <span className="text-sm font-medium text-slate-700">Din nye total</span>
-                            <span className="text-xl font-bold text-slate-900">2.700 kr.</span>
+                            <span className="text-xl font-bold text-slate-900">{formatPrice(SUBTOTAL + TAX)}</span>
                           </div>
                           <div className="flex items-center justify-center gap-1.5 text-emerald-600 text-sm font-medium">
                             <ShieldCheck className="h-4 w-4" />
-                            Du sparer 369 kr.
+                            Du sparer {formatPrice(INITIAL_SHIPPING)}
                           </div>
                         </div>
                       </div>
@@ -471,15 +533,33 @@ export default function LivePreview() {
                       </div>
 
                       <Button 
-                        className="w-full h-12 text-sm font-semibold bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/25 relative overflow-hidden group rounded-lg"
-                        onClick={() => setShowModal(false)}
+                        className={`w-full h-12 text-sm font-semibold relative overflow-hidden group rounded-lg transition-all ${
+                          discountApplied
+                            ? "bg-slate-200 text-slate-500 cursor-not-allowed shadow-none"
+                            : "bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-500/25"
+                        }`}
+                        onClick={handleApplyDiscount}
+                        disabled={discountApplied}
                       >
                         <span className="relative z-10 flex items-center gap-2">
-                          <Truck className="h-4 w-4" />
-                          Få Fri Fragt Nu
+                          {discountApplied ? (
+                            <>
+                              <Check className="h-4 w-4" />
+                              Rabat Anvendt ✓
+                            </>
+                          ) : (
+                            <>
+                              <Truck className="h-4 w-4" />
+                              Få Fri Fragt Nu
+                            </>
+                          )}
                         </span>
-                        <span className="absolute inset-0 bg-emerald-400 opacity-0 group-hover:opacity-20 transition-opacity" />
-                        <span className="absolute -inset-1 bg-emerald-400/20 rounded-lg animate-pulse" style={{ animationDuration: "2s" }} />
+                        {!discountApplied && (
+                          <>
+                            <span className="absolute inset-0 bg-emerald-400 opacity-0 group-hover:opacity-20 transition-opacity" />
+                            <span className="absolute -inset-1 bg-emerald-400/20 rounded-lg animate-pulse" style={{ animationDuration: "2s" }} />
+                          </>
+                        )}
                       </Button>
 
                       <button 
