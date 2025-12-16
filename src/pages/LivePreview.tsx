@@ -35,8 +35,8 @@ export default function LivePreview() {
 
   return (
     <DashboardLayout 
-      title="Live Preview" 
-      subtitle="See exactly what your customers experience when ShipConvert activates"
+      title="Live Test" 
+      subtitle="Se præcis hvad dine kunder oplever, når ShipConvert aktiveres"
     >
       {/* Preview Controls */}
       <div className="flex items-center gap-3 mb-4">
@@ -45,10 +45,10 @@ export default function LivePreview() {
           disabled={showModal}
         >
           <Sparkles className="h-4 w-4 mr-2" />
-          Trigger ShipConvert
+          Udløs ShipConvert
         </Button>
         <Badge variant="secondary" className="text-xs">
-          Demo Mode - No real checkout
+          Demo-tilstand - Ingen rigtig checkout
         </Badge>
       </div>
 
@@ -63,8 +63,8 @@ export default function LivePreview() {
               <span className="text-lg font-semibold tracking-tight">LUXE FASHION</span>
               <div className="flex items-center gap-6 text-sm text-slate-300">
                 <span>Shop</span>
-                <span>Collections</span>
-                <span>About</span>
+                <span>Kollektioner</span>
+                <span>Om os</span>
               </div>
             </div>
           </div>
@@ -74,13 +74,13 @@ export default function LivePreview() {
             <div className="grid lg:grid-cols-5 gap-6">
               {/* Left - Form */}
               <div className="lg:col-span-3 space-y-5">
-                <h1 className="text-xl font-semibold text-slate-900">Checkout</h1>
+                <h1 className="text-xl font-semibold text-slate-900">Kassen</h1>
                 
                 {/* Contact Section */}
                 <div className="bg-white rounded-lg border border-slate-200 p-4 space-y-3">
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
                     <CreditCard className="h-4 w-4" />
-                    Contact Information
+                    Kontaktoplysninger
                   </div>
                   <div className="h-9 bg-slate-100 rounded-md" />
                 </div>
@@ -89,7 +89,7 @@ export default function LivePreview() {
                 <div className="bg-white rounded-lg border border-slate-200 p-4 space-y-3">
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
                     <MapPin className="h-4 w-4" />
-                    Shipping Address
+                    Leveringsadresse
                   </div>
                   <div className="grid grid-cols-2 gap-2">
                     <div className="h-9 bg-slate-100 rounded-md" />
@@ -104,16 +104,16 @@ export default function LivePreview() {
                 <div className="bg-white rounded-lg border border-slate-200 p-4 space-y-3">
                   <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
                     <Truck className="h-4 w-4" />
-                    Shipping Method
+                    Leveringsmetode
                   </div>
                   <div className="space-y-2">
                     <div className="flex items-center justify-between p-2.5 rounded-md border border-slate-200 bg-slate-50">
-                      <span className="text-sm text-slate-600">Express Shipping (2-3 days)</span>
-                      <span className="text-sm font-medium text-slate-900">$49.00</span>
+                      <span className="text-sm text-slate-600">Express Levering (2-3 dage)</span>
+                      <span className="text-sm font-medium text-slate-900">369 kr.</span>
                     </div>
                     <div className="flex items-center justify-between p-2.5 rounded-md border border-slate-200">
-                      <span className="text-sm text-slate-600">Standard Shipping (5-7 days)</span>
-                      <span className="text-sm font-medium text-slate-900">$12.00</span>
+                      <span className="text-sm text-slate-600">Standard Levering (5-7 dage)</span>
+                      <span className="text-sm font-medium text-slate-900">89 kr.</span>
                     </div>
                   </div>
                 </div>
@@ -122,7 +122,7 @@ export default function LivePreview() {
               {/* Right - Order Summary */}
               <div className="lg:col-span-2">
                 <div className="bg-white rounded-lg border border-slate-200 p-4 sticky top-6">
-                  <h2 className="font-medium text-slate-900 mb-3 text-sm">Order Summary</h2>
+                  <h2 className="font-medium text-slate-900 mb-3 text-sm">Ordreoversigt</h2>
                   
                   {/* Product */}
                   <div className="flex gap-3 pb-3 border-b border-slate-200">
@@ -130,9 +130,9 @@ export default function LivePreview() {
                       <Package className="h-5 w-5 text-slate-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="text-sm font-medium text-slate-900">Premium Wool Coat</p>
-                      <p className="text-xs text-slate-500">Size: M | Color: Charcoal</p>
-                      <p className="text-sm font-medium text-slate-900 mt-1">$300.00</p>
+                      <p className="text-sm font-medium text-slate-900">Premium Uldfrakke</p>
+                      <p className="text-xs text-slate-500">Str.: M | Farve: Kul</p>
+                      <p className="text-sm font-medium text-slate-900 mt-1">2.250 kr.</p>
                     </div>
                   </div>
 
@@ -140,27 +140,27 @@ export default function LivePreview() {
                   <div className="py-3 space-y-1.5 text-sm">
                     <div className="flex justify-between text-slate-600">
                       <span>Subtotal</span>
-                      <span>$300.00</span>
+                      <span>2.250 kr.</span>
                     </div>
                     <div className="flex justify-between text-slate-600">
-                      <span>Express Shipping</span>
-                      <span>$49.00</span>
+                      <span>Express Levering</span>
+                      <span>369 kr.</span>
                     </div>
                     <div className="flex justify-between text-slate-600">
-                      <span>Tax</span>
-                      <span>$27.93</span>
+                      <span>Moms</span>
+                      <span>450 kr.</span>
                     </div>
                   </div>
 
                   <div className="pt-3 border-t border-slate-200">
                     <div className="flex justify-between font-semibold text-slate-900 text-sm">
                       <span>Total</span>
-                      <span>$376.93</span>
+                      <span>3.069 kr.</span>
                     </div>
                   </div>
 
                   <Button className="w-full mt-4 bg-slate-900 hover:bg-slate-800 text-sm">
-                    Pay Now
+                    Betal Nu
                   </Button>
                 </div>
               </div>
@@ -204,39 +204,39 @@ export default function LivePreview() {
                   <div className="flex justify-center mb-3">
                     <Badge className="bg-emerald-100 text-emerald-700 border-emerald-200 gap-1.5 px-3 py-1 text-xs">
                       <Sparkles className="h-3 w-3" />
-                      Special Offer Unlocked
+                      Særligt tilbud låst op
                     </Badge>
                   </div>
 
                   {/* Headline */}
                   <h2 className="text-xl font-bold text-slate-900 text-center mb-2">
-                    Wait! Don't pay for shipping.
+                    Vent! Betal ikke for fragt.
                   </h2>
                   
                   {/* Subtext */}
                   <p className="text-slate-600 text-center text-sm leading-relaxed mb-5">
-                    We noticed you're purchasing from our <span className="font-medium text-slate-800">Premium Collection</span>. 
-                    We've unlocked <span className="font-semibold text-emerald-600">Free Express Shipping</span> for this order if you complete it now.
+                    Vi kan se, du handler varer med høj kvalitet. Vi har låst op for{" "}
+                    <span className="font-semibold text-emerald-600">Fri Fragt</span>, hvis du gennemfører nu.
                   </p>
 
                   {/* The Math */}
                   <div className="bg-gradient-to-br from-slate-50 to-slate-100 rounded-lg p-4 mb-5 border border-slate-200">
                     <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-sm text-slate-600">Express Shipping</span>
+                        <span className="text-sm text-slate-600">Express Levering</span>
                         <div className="flex items-center gap-2">
-                          <span className="text-sm text-slate-400 line-through">$49.00</span>
-                          <span className="text-base font-bold text-emerald-600">FREE</span>
+                          <span className="text-sm text-slate-400 line-through">369 kr.</span>
+                          <span className="text-base font-bold text-emerald-600">GRATIS</span>
                         </div>
                       </div>
                       <div className="h-px bg-slate-200" />
                       <div className="flex items-center justify-between">
-                        <span className="text-sm font-medium text-slate-700">Your New Total</span>
-                        <span className="text-xl font-bold text-slate-900">$327.93</span>
+                        <span className="text-sm font-medium text-slate-700">Din nye total</span>
+                        <span className="text-xl font-bold text-slate-900">2.700 kr.</span>
                       </div>
                       <div className="flex items-center justify-center gap-1.5 text-emerald-600 text-sm font-medium">
                         <ShieldCheck className="h-4 w-4" />
-                        You save $49.00
+                        Du sparer 369 kr.
                       </div>
                     </div>
                   </div>
@@ -245,7 +245,7 @@ export default function LivePreview() {
                   <div className="flex items-center justify-center gap-2 mb-5">
                     <Clock className="h-4 w-4 text-amber-500" />
                     <span className="text-sm text-slate-600">
-                      Offer reserved for{" "}
+                      Tilbud reserveret i{" "}
                       <span className="font-mono font-semibold text-slate-900">{formatTime(timeLeft)}</span>
                     </span>
                   </div>
@@ -257,7 +257,7 @@ export default function LivePreview() {
                   >
                     <span className="relative z-10 flex items-center gap-2">
                       <Truck className="h-4 w-4" />
-                      Claim Free Shipping & Checkout
+                      Få Fri Fragt Nu
                     </span>
                     <span className="absolute inset-0 bg-emerald-400 opacity-0 group-hover:opacity-20 transition-opacity" />
                     <span className="absolute -inset-1 bg-emerald-400/20 rounded-lg animate-pulse" style={{ animationDuration: "2s" }} />
@@ -268,18 +268,18 @@ export default function LivePreview() {
                     className="w-full mt-3 text-sm text-slate-400 hover:text-slate-600 transition-colors"
                     onClick={() => setShowModal(false)}
                   >
-                    No thanks, I'll pay full price
+                    Nej tak, jeg betaler fuld pris
                   </button>
 
                   {/* Trust Badge */}
                   <div className="flex items-center justify-center gap-4 mt-5 pt-4 border-t border-slate-100">
                     <div className="flex items-center gap-1.5 text-xs text-slate-400">
                       <ShieldCheck className="h-3.5 w-3.5" />
-                      Secure Checkout
+                      Sikker Checkout
                     </div>
                     <div className="flex items-center gap-1.5 text-xs text-slate-400">
                       <Truck className="h-3.5 w-3.5" />
-                      2-3 Day Delivery
+                      2-3 Dages Levering
                     </div>
                   </div>
                 </div>
@@ -289,7 +289,7 @@ export default function LivePreview() {
               <div className="flex justify-center mt-3">
                 <div className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-slate-800/80 backdrop-blur text-slate-200 text-xs">
                   <Sparkles className="h-3 w-3 text-emerald-400" />
-                  Powered by ShipConvert
+                  Drevet af ShipConvert
                 </div>
               </div>
             </div>
@@ -300,9 +300,9 @@ export default function LivePreview() {
       {/* Preview Info */}
       <div className="mt-4 p-4 rounded-lg bg-card border border-border">
         <p className="text-sm text-muted-foreground">
-          <strong className="text-foreground">How it works:</strong> When a customer shows exit intent or hesitation at checkout, 
-          ShipConvert checks your margin rules. If the cart qualifies, this modal appears offering free shipping — 
-          only when it's profitable for you.
+          <strong className="text-foreground">Sådan virker det:</strong> Når en kunde viser tegn på at forlade checkout, 
+          tjekker ShipConvert dine dækningsgrad-regler. Hvis kurven kvalificerer sig, vises denne modal med fri fragt — 
+          kun når det er profitabelt for dig.
         </p>
       </div>
     </DashboardLayout>
