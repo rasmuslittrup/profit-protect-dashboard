@@ -4,13 +4,15 @@ import {
   Zap, 
   BarChart3, 
   Settings,
-  ChevronRight
+  ChevronRight,
+  Eye
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navigation = [
   { name: "Dashboard", href: "/", icon: LayoutDashboard },
   { name: "Profit Engine", href: "/profit-engine", icon: Zap },
+  { name: "Live Preview", href: "/live-preview", icon: Eye },
   { name: "Analytics", href: "/analytics", icon: BarChart3 },
   { name: "Settings", href: "/settings", icon: Settings },
 ];
