@@ -14,7 +14,99 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      conversion_events: {
+        Row: {
+          cart_value: number | null
+          created_at: string
+          event_type: string
+          id: string
+          shipping_cost_saved: number | null
+          user_id: string
+        }
+        Insert: {
+          cart_value?: number | null
+          created_at?: string
+          event_type: string
+          id?: string
+          shipping_cost_saved?: number | null
+          user_id: string
+        }
+        Update: {
+          cart_value?: number | null
+          created_at?: string
+          event_type?: string
+          id?: string
+          shipping_cost_saved?: number | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      shipping_rules: {
+        Row: {
+          action: string
+          created_at: string
+          estimated_margin_percent: number
+          id: string
+          is_active: boolean
+          priority: number
+          rule_type: string
+          target_value: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          action?: string
+          created_at?: string
+          estimated_margin_percent?: number
+          id?: string
+          is_active?: boolean
+          priority?: number
+          rule_type: string
+          target_value: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          action?: string
+          created_at?: string
+          estimated_margin_percent?: number
+          id?: string
+          is_active?: boolean
+          priority?: number
+          rule_type?: string
+          target_value?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      shop_settings: {
+        Row: {
+          control_group_percent: number
+          created_at: string
+          id: string
+          min_profit_threshold: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          control_group_percent?: number
+          created_at?: string
+          id?: string
+          min_profit_threshold?: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          control_group_percent?: number
+          created_at?: string
+          id?: string
+          min_profit_threshold?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
